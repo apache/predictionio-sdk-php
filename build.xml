@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="predictionio" default="package">
+
+  <property name="dir.output" value="${project.basedir}/build/artifacts" />
+
+  <target name="clean">
+    <delete dir="${dir.output}" />
+  </target>
+
+  <target name="prepare" depends="clean">
+    <mkdir dir="${dir.output}" />
+  </target>
+
+  <target name="install-dependencies" depends="prepare">
+    <if>
+      <available file="composer.phar" />
+      <then>
+        <echo>Composer is installed</echo>
+      </then>
+      <else>
+        <echo message="Installing composer" />
+        <exec command="curl -s http://getcomposer.org/installer | php" passthru="true" />
+        <exec command="php composer.phar install --dev" passthru="true" />
+      </else>
+    </if>
+  </target>
+
+  <target name="clean-dependencies">
+    <delete dir="${project.basedir}/vendor"/>
+    <delete file="composer.lock" />
+  </target>
+
+  <target name="update-dependencies">
+    <exec command="php composer.phar update --dev" passthru="true" />
+  </target>
+
+  <target name="package" depends="install-dependencies" description="Create a PHAR with an autoloader">
+    <pharpackage
+    	destfile="${dir.output}/predictionio.phar"
+    	basedir="."
+    	stub="phar-stub.php">
+      <fileset dir=".">
+      	<include name="src/**/*.php" />
+      	<include name="src/**/*.json" />
+        <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
+        <include name="vendor/symfony/event-dispatcher/**/*.php" />
+      	<include name="vendor/guzzle/guzzle/src/Guzzle/**/*.php" />
+      </fileset>
+      <metadata>
+	      <element name="author" value="PredictionIO" />
+      </metadata>
+    </pharpackage>
+    <exec command="apigen -s src -d docs --title 'PredictionIO API PHP Client'" passthru="true" />
+  </target>
+
+</project>
