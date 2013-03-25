@@ -18,5 +18,10 @@
     },
     "require-dev": {
     	"symfony/class-loader": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "PredictionIO": "src/"
+        }
     }
 }
