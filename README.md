@@ -9,20 +9,51 @@ Prerequisites
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
 
-Building
---------
+Getting Started
+---------------
 
-Assuming you are cloning to your home directory.
+### By Composer
 
-    cd ~
-    git clone git://github.com/PredictionIO/PredictionIO-PHP-SDK.git
+The easiest way to install PredictionIO PHP client is to use [Composer](http://getcomposer.org/).
 
-To build the SDK,
+1. Add `predictionio/predictionio` as a dependency in your project's ``composer.json`` file:
 
-    cd ~/PredictionIO-PHP-SDK
-    phing
+        {
+            "require": {
+                "predictionio/predictionio": "*"
+            }
+        }
 
-Once the build finish you will get a Phar and a set of API documentation.
+2. Install Composer:
+
+        curl -sS https://getcomposer.org/installer | php
+
+3. Use Composer to install your dependencies:
+
+        php composer.phar install
+
+4. Require Composer's autoloader
+
+        require_once("vendor/autoload.php");
+
+
+### By Building Phar
+
+1. Assuming you are cloning to your home directory:
+
+        cd ~
+        git clone git://github.com/PredictionIO/PredictionIO-PHP-SDK.git
+
+2. Build the Phar:
+
+        cd ~/PredictionIO-PHP-SDK
+        phing
+
+3. Once the build finishes you will get a Phar in `build/artifacts`, and a set of API documentation.
+   Assuming you have copied the Phar to your current working directory, to use the client, simply
+
+        require_once("predictionio.phar");
+
 
 Supported Commands
 ------------------
@@ -43,7 +74,6 @@ They can be supplied to these commands by the `set` method.
 
 ### Instantiate PredictionIO API Client
 
-    require_once("predictionio.phar");
     use PredictionIO\PredictionIOClient;
     $client = PredictionIOClient::factory(array("appkey" => "<your app key>"));
 
