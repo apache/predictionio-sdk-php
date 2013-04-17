@@ -14,7 +14,7 @@
     ],
     "require": {
     	"php": ">=5.3.2",
-    	"guzzle/guzzle": "*"
+    	"guzzle/guzzle": "~3.3.1"
     },
     "require-dev": {
     	"symfony/class-loader": "*"
