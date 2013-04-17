@@ -9,20 +9,51 @@ Prerequisites
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
 
-Building
---------
+Getting Started
+---------------
 
-Assuming you are cloning to your home directory.
+### By Composer
 
-    cd ~
-    git clone git://github.com/PredictionIO/PredictionIO-PHP-SDK.git
+The easiest way to install PredictionIO PHP client is to use [Composer](http://getcomposer.org/).
 
-To build the SDK,
+1. Add `predictionio/predictionio` as a dependency in your project's ``composer.json`` file:
 
-    cd ~/PredictionIO-PHP-SDK
-    phing
+        {
+            "require": {
+                "predictionio/predictionio": "*"
+            }
+        }
 
-Once the build finish you will get a Phar and a set of API documentation.
+2. Install Composer:
+
+        curl -sS https://getcomposer.org/installer | php -d detect_unicode=Off
+
+3. Use Composer to install your dependencies:
+
+        php composer.phar install
+
+4. Include Composer's autoloader in your PHP code
+
+        require_once("vendor/autoload.php");
+
+
+### By Building Phar
+
+1. Assuming you are cloning to your home directory:
+
+        cd ~
+        git clone git://github.com/PredictionIO/PredictionIO-PHP-SDK.git
+
+2. Build the Phar:
+
+        cd ~/PredictionIO-PHP-SDK
+        phing
+
+3. Once the build finishes you will get a Phar in `build/artifacts`, and a set of API documentation.
+   Assuming you have copied the Phar to your current working directory, to use the client, simply
+
+        require_once("predictionio.phar");
+
 
 Supported Commands
 ------------------
@@ -43,24 +74,34 @@ They can be supplied to these commands by the `set` method.
 
 ### Instantiate PredictionIO API Client
 
-    require_once("predictionio.phar");
     use PredictionIO\PredictionIOClient;
     $client = PredictionIOClient::factory(array("appkey" => "<your app key>"));
 
 ### Import a User Record from Your App
 
-    // (your user registration logic)
-    $uid = get_user_from_your_db();
-    $command = $client->getCommand('create_user', array('uid' => $uid));
+    // assume you have a user with user ID 5
+    $command = $client->getCommand('create_user', array('uid' => 5));
     $response = $client->execute($command);
-    // (other work to do for the rest of the page)
+
+### Import an Item Record from Your App
+
+    // assume you have a book with ID 'bookId1' and we assign 1 as the type ID for book
+    $command = $client->getCommand('create_item', array('iid' => 'bookId1', 'itypes' => 1));
+    $response = $client->execute($command);
 
 ### Import a User Action (View) form Your App
 
-    $client->execute($client->getCommand('user_view_item', array('uid' => '4', 'iid' => '15')));
-    // (other work to do for the rest of the page)
+    // assume this user has viewed this book item
+    $client->execute($client->getCommand('user_view_item', array('uid' => 5, 'iid' => 'bookId1')));
 
 ### Retrieving Top N Recommendations for a User
 
-    $client->execute($client->getCommand('itemrec_get_top_n', array('engine' => 'test', 'uid' => '4', 'n' => 10)));
-    // (work you need to do for the page (rendering, db queries, etc))
+    try {
+        // assume you have created an itemrec engine named 'engine1'
+        // we try to get top 10 recommendations for a user (user ID 5)
+        $command = $client->getCommand('itemrec_get_top_n', array('engine' => 'engine1', 'uid' => 5, 'n' => 10))
+        $rec = $client->execute($command);
+        print_r($rec);
+    } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
