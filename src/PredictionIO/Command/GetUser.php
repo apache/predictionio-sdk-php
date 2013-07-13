@@ -8,7 +8,7 @@ use Guzzle\Service\Command\AbstractCommand;
 /**
  * Retrieve User Information
  *
- * Get the information record of a user. Returned record will contain an extra 'ct' field, indicating the creation time of the record in UNIX UTC timestamp (milliseconds) format.
+ * Get the information record of a user.
  *
  * @guzzle uid type="string" required="true"
  */
