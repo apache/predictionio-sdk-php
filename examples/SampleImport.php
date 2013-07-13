@@ -32,7 +32,8 @@ while (!feof($handle)) {
 	$tuple = explode("\t", $line);
 	if (count($tuple) == 3) {
 		try {
-			$client->execute($client->getCommand("user_rate_item", array("uid" => $tuple[0], "iid" => $tuple[1], "rate" => intval($tuple[2]))));
+			$client->identify($tuple[0]);
+			$client->execute($client->getCommand("record_action_on_item", array("pio_action" => "rate", "pio_iid" => $tuple[1], "pio_rate" => intval($tuple[2]))));
 		} catch (Guzzle\Http\Exception\ClientErrorResponseException $e) {
 			print $e->getResponse()->getBody()."\n\n";
 		}

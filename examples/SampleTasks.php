@@ -20,17 +20,17 @@ try {
 
 	$uid = "foobar";
 
-	$command = $client->getCommand('create_user', array('uid' => $uid));
+	$command = $client->getCommand('create_user', array('pio_uid' => $uid));
 	$command->setInactive("true");
 	$command->set("gender", "F");
 	$response =$client->execute($command);
 	print_r($response);
 
-	$command = $client->getCommand('get_user', array('uid' => $uid));
+	$command = $client->getCommand('get_user', array('pio_uid' => $uid));
 	$response = $client->execute($command);
 	print_r($response);
 
-	$command = $client->getCommand('delete_user', array('uid' => $uid));
+	$command = $client->getCommand('delete_user', array('pio_uid' => $uid));
 	$response =$client->execute($command);
 	print_r($response);
 
@@ -41,18 +41,18 @@ try {
 
 	$iid = "barbaz";
 
-	$command = $client->getCommand('create_item', array('iid' => $iid));
+	$command = $client->getCommand('create_item', array('pio_iid' => $iid));
 	$command->setItypes(array("dead", "beef"));
 	$command->setPrice(9.99);
 	$command->set("weight", "10");
 	$response = $client->execute($command);
 	print_r($response);
 
-	$command = $client->getCommand('get_item', array('iid' => $iid));
+	$command = $client->getCommand('get_item', array('pio_iid' => $iid));
 	$response = $client->execute($command);
 	print_r($response);
 
-	$command = $client->getCommand('delete_item', array('iid' => $iid));
+	$command = $client->getCommand('delete_item', array('pio_iid' => $iid));
 	$response = $client->execute($command);
 	print_r($response);
 
@@ -61,7 +61,8 @@ try {
 	// Retrieving Top N Recommendations for a User
 	print "Get top 10 recommendations for a user:\n";
 
-	$response = $client->execute($client->getCommand("itemrec_get_top_n", array("engine" => "movies", "uid" => "1", "n" => 10)));
+	$client->identify("1");
+	$response = $client->execute($client->getCommand("itemrec_get_top_n", array("pio_engine" => "movies", "pio_n" => 10)));
 	print_r($response);
 } catch (Guzzle\Http\Exception\ClientErrorResponseException $e) {
 	print $e->getResponse()->getBody()."\n\n";

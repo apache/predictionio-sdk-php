@@ -36,7 +36,7 @@ class CreateItem extends AbstractCommand
    */
   public function setIid($iid)
   {
-    return $this->iid = $iid;
+    return $this->set("pio_iid", $iid);
   }
 
   /**
@@ -51,9 +51,9 @@ class CreateItem extends AbstractCommand
   public function setItypes($itypes)
   {
     if (is_array($itypes)) {
-      return $this->set("itypes", implode(",", $itypes));
+      return $this->set("pio_itypes", implode(",", $itypes));
     } else {
-      return $this->set("itypes", $itypes);
+      return $this->set("pio_itypes", $itypes);
     }
   }
 
@@ -66,7 +66,7 @@ class CreateItem extends AbstractCommand
    */
   public function setStartT($startT)
   {
-    return $this->set("startT", $startT);
+    return $this->set("pio_startT", $startT);
   }
 
   /**
@@ -78,7 +78,7 @@ class CreateItem extends AbstractCommand
    */
   public function setEndT($endT)
   {
-    return $this->set("endT", $endT);
+    return $this->set("pio_endT", $endT);
   }
 
   /**
@@ -90,7 +90,7 @@ class CreateItem extends AbstractCommand
    */
   public function setPrice($price)
   {
-    return $this->set("price", $price);
+    return $this->set("pio_price", $price);
   }
 
   /**
@@ -102,7 +102,7 @@ class CreateItem extends AbstractCommand
    */
   public function setProfit($profit)
   {
-    return $this->set("profit", $profit);
+    return $this->set("pio_profit", $profit);
   }
 
   /**
@@ -116,7 +116,7 @@ class CreateItem extends AbstractCommand
    */
   public function setLatlng($latlng)
   {
-    return $this->set("latlng", $latlng);
+    return $this->set("pio_latlng", $latlng);
   }
 
   /**

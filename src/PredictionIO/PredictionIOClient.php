@@ -28,20 +28,22 @@ use Guzzle\Service\Command\AbstractCommand;
  * <code>
  * // (your user registration logic)
  * $uid = get_user_from_your_db();
- * $command = $client->getCommand('create_user', array('uid' => $uid));
+ * $command = $client->getCommand('create_user', array('pio_uid' => $uid));
  * $response = $client->execute($command);
  * // (other work to do for the rest of the page)
  * </code>
  *
  * <b>Import a User Action (View) form Your App</b>
  * <code>
- * $client->execute($client->getCommand('user_view_item', array('uid' => '4', 'iid' => '15')));
+ * $client->identify('4');
+ * $client->execute($client->getCommand('record_action_on_item', array('pio_action' => 'view', 'pio_iid' => '15')));
  * // (other work to do for the rest of the page)
  * </code>
  *
  * <b>Retrieving Top N Recommendations for a User</b>
  * <code>
- * $client->execute($client->getCommand('itemrec_get_top_n', array('engine' => 'test', 'uid' => '4', 'n' => 10)));
+ * $client->identify('4');
+ * $client->execute($client->getCommand('itemrec_get_top_n', array('pio_engine' => 'test', 'pio_n' => 10)));
  * // (work you need to do for the page (rendering, db queries, etc))
  * </code>
  *
@@ -50,6 +52,8 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class PredictionIOClient extends Client
 {
+  private $apiuid = "";
+
   /**
    * Factory method to create a new PredictionIOClient
    *
@@ -73,6 +77,29 @@ class PredictionIOClient extends Client
   }
 
   /**
+   * Identify the user ID that will be used by all subsequent recording of actions on items, and recommendations retrieval.
+   *
+   * @param string $uid User ID.
+   */
+  public function identify($uid)
+  {
+    $this->apiuid = $uid;
+  }
+
+  /**
+   * Returns the identity (user ID) that will be used by all subsequent recording of actions on items, and recommendations retrieval.
+   *
+   * @returns string
+   */
+  public function getIdentity()
+  {
+    if (empty($this->apiuid)) {
+      throw new UnidentifiedUserException("Must call identify() before performing any user-related commands.");
+    }
+    return $this->apiuid;
+  }
+
+  /**
    * Create and return a new Guzzle\Http\Message\RequestInterface configured for the client.
    *
    * Used internally by the library. Do not use directly.
@@ -87,9 +114,9 @@ class PredictionIOClient extends Client
   public function createRequest($method = Guzzle\Http\Message\RequestInterface::GET, $uri = null, $headers = null, $body = null)
   {
     if (is_array($body)) {
-      $body['appkey'] = $this->getConfig()->get("appkey");
+      $body['pio_appkey'] = $this->getConfig()->get("appkey");
     } else {
-      $body = array('appkey' => $this->getConfig()->get("appkey"));
+      $body = array('pio_appkey' => $this->getConfig()->get("appkey"));
     }
 
     // Remove Guzzle internals to prevent them from going to the API
@@ -110,3 +137,8 @@ class PredictionIOClient extends Client
     return $request;
   }
 }
+
+/**
+ * Thrown when user-related commands are called before identify() is called.
+ */
+class UnidentifiedUserException extends \Exception { }

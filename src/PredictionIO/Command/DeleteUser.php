@@ -23,7 +23,7 @@ class DeleteUser extends AbstractCommand
    */
   public function setUid($uid)
   {
-    return $this->set('uid', $uid);
+    return $this->set('pio_uid', $uid);
   }
 
   /**
@@ -31,7 +31,7 @@ class DeleteUser extends AbstractCommand
    */
   protected function build()
   {
-    $this->request = $this->client->createRequest(RequestInterface::DELETE, 'users/' . $this->get('uid'));
+    $this->request = $this->client->createRequest(RequestInterface::DELETE, 'users/' . $this->get('pio_uid'));
   }
 }
 

@@ -31,7 +31,7 @@ class CreateUser extends AbstractCommand
    */
   public function setUid($uid)
   {
-    return $this->set("uid", $uid);
+    return $this->set("pio_uid", $uid);
   }
 
   /**
@@ -45,7 +45,7 @@ class CreateUser extends AbstractCommand
    */
   public function setLatlng($latlng)
   {
-    return $this->set("latlng", $latlng);
+    return $this->set("pio_latlng", $latlng);
   }
 
   /**
@@ -57,7 +57,7 @@ class CreateUser extends AbstractCommand
    */
   public function setInactive($inactive)
   {
-    return $this->set("inactive", $inactive);
+    return $this->set("pio_inactive", $inactive);
   }
 
   /**

@@ -24,7 +24,7 @@ class GetItem extends AbstractCommand
    */
   public function setIid($iid)
   {
-    return $this->set('iid', $iid);
+    return $this->set('pio_iid', $iid);
   }
 
   /**
@@ -32,7 +32,7 @@ class GetItem extends AbstractCommand
    */
   protected function build()
   {
-    $this->request = $this->client->createRequest(RequestInterface::GET, 'items/' . $this->get('iid'));
+    $this->request = $this->client->createRequest(RequestInterface::GET, 'items/' . $this->get('pio_iid'));
   }
 }
 

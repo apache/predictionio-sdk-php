@@ -23,7 +23,7 @@ class DeleteItem extends AbstractCommand
    */
   public function setIid($iid)
   {
-    return $this->set('iid', $iid);
+    return $this->set('pio_iid', $iid);
   }
 
   /**
@@ -31,7 +31,7 @@ class DeleteItem extends AbstractCommand
    */
   protected function build()
   {
-    $this->request = $this->client->createRequest(RequestInterface::DELETE, 'items/' . $this->get('iid'));
+    $this->request = $this->client->createRequest(RequestInterface::DELETE, 'items/' . $this->get('pio_iid'));
   }
 }
 
