@@ -12,7 +12,7 @@ use Guzzle\Service\Command\AbstractCommand;
  *
  * To supply custom user information, simply pass it in during command creation, or use the "set" method inherited from Guzzle\Common\Collection.
  * <code>
- * $command = $client->getCommand('create_user', array('uid' => 'foobar', 'custom1' => 'baz'));
+ * $command = $client->getCommand('create_user', array('pio_uid' => 'foobar', 'custom1' => 'baz'));
  * $command->set('custom2', '0xdeadbeef');
  * </code>
  *

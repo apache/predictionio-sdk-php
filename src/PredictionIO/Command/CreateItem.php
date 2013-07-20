@@ -12,7 +12,7 @@ use Guzzle\Service\Command\AbstractCommand;
  *
  * To supply custom item information, simply pass it in during command creation, or use the "set" method inherited from Guzzle\Common\Collection.
  * <code>
- * $command = $client->getCommand('create_item', array('iid' => 'foobar', 'custom1' => 'baz'));
+ * $command = $client->getCommand('create_item', array('pio_iid' => 'foobar', 'custom1' => 'baz'));
  * $command->set('custom2', '0xdeadbeef');
  * </code>
  *

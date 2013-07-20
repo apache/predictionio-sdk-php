@@ -8,7 +8,7 @@ use Guzzle\Service\Command\AbstractCommand;
 /**
  * Retrieve Item Information
  *
- * Get the information record of an item. Returned record will contain an extra 'ct' field, indicating the creation time of the record in UNIX UTC timestamp (milliseconds) format.
+ * Get the information record of an item.
  * If startT/endT exists, it will be returned in UNIX UTC timestamp (milliseconds) format.
  *
  * @guzzle iid type="string" required="true"

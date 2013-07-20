@@ -80,26 +80,28 @@ They can be supplied to these commands by the `set` method.
 ### Import a User Record from Your App
 
     // assume you have a user with user ID 5
-    $command = $client->getCommand('create_user', array('uid' => 5));
+    $command = $client->getCommand('create_user', array('pio_uid' => 5));
     $response = $client->execute($command);
 
 ### Import an Item Record from Your App
 
     // assume you have a book with ID 'bookId1' and we assign 1 as the type ID for book
-    $command = $client->getCommand('create_item', array('iid' => 'bookId1', 'itypes' => 1));
+    $command = $client->getCommand('create_item', array('pio_iid' => 'bookId1', 'pio_itypes' => 1));
     $response = $client->execute($command);
 
 ### Import a User Action (View) form Your App
 
     // assume this user has viewed this book item
-    $client->execute($client->getCommand('user_view_item', array('uid' => 5, 'iid' => 'bookId1')));
+    $client->identify('5');
+    $client->execute($client->getCommand('record_action_on_item', array('pio_action' => 'view', 'pio_iid' => 'bookId1')));
 
 ### Retrieving Top N Recommendations for a User
 
     try {
         // assume you have created an itemrec engine named 'engine1'
         // we try to get top 10 recommendations for a user (user ID 5)
-        $command = $client->getCommand('itemrec_get_top_n', array('engine' => 'engine1', 'uid' => 5, 'n' => 10))
+        $client->identify('5');
+        $command = $client->getCommand('itemrec_get_top_n', array('pio_engine' => 'engine1', 'pio_n' => 10))
         $rec = $client->execute($command);
         print_r($rec);
     } catch (Exception $e) {
