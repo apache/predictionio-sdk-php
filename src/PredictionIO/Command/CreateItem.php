@@ -42,7 +42,7 @@ class CreateItem extends AbstractCommand
   /**
    * Set the "itypes" parameter for the current command
    *
-   * $itypes can be supplied as an array of integers, or a "," delimited list of integers.
+   * $itypes can be supplied as an array of strings, or a "," delimited list of strings.
    *
    * @param array|string $itypes Item types
    *
