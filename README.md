@@ -101,7 +101,7 @@ They can be supplied to these commands by the `set` method.
         // assume you have created an itemrec engine named 'engine1'
         // we try to get top 10 recommendations for a user (user ID 5)
         $client->identify('5');
-        $command = $client->getCommand('itemrec_get_top_n', array('pio_engine' => 'engine1', 'pio_n' => 10))
+        $command = $client->getCommand('itemrec_get_top_n', array('pio_engine' => 'engine1', 'pio_n' => 10));
         $rec = $client->execute($command);
         print_r($rec);
     } catch (Exception $e) {
@@ -114,7 +114,7 @@ They can be supplied to these commands by the `set` method.
         // assume you have created an itemsim engine named 'engine2'
         // we try to get top 10 similar items for an item (item ID 6)
         $client->identify('6');
-        $command = $client->getCommand('itemsim_get_top_n', array('pio_iid' => 43, 'pio_engine' => 'engine1', 'pio_n' => 10))
+        $command = $client->getCommand('itemsim_get_top_n', array('pio_iid' => 43, 'pio_engine' => 'engine1', 'pio_n' => 10));
         $rec = $client->execute($command);
         print_r($rec);
     } catch (Exception $e) {
