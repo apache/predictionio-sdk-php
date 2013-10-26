@@ -20,7 +20,7 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
         {
             "require": {
-                "predictionio/predictionio": "*"
+                "predictionio/predictionio": "~0.6.0"
             }
         }
 
