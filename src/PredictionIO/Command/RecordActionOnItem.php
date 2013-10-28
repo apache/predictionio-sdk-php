@@ -75,5 +75,3 @@ class RecordActionOnItem extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::POST, 'actions/u2i', null, $this->getAll());
   }
 }
-
-?>

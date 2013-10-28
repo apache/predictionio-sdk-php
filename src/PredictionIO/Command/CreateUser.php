@@ -68,5 +68,3 @@ class CreateUser extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::POST, 'users', null, $this->getAll());
   }
 }
-
-?>

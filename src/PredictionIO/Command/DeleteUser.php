@@ -34,5 +34,3 @@ class DeleteUser extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::DELETE, 'users/' . $this->get('pio_uid'));
   }
 }
-
-?>

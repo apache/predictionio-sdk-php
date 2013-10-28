@@ -139,5 +139,3 @@ class CreateItem extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::POST, 'items', null, $this->getAll());
   }
 }
-
-?>
