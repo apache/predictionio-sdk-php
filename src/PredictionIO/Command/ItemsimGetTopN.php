@@ -120,5 +120,3 @@ class ItemsimGetTopN extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::GET, 'engines/itemsim/' . $this->get('pio_engine') . '/topn', null, $this->getAll());
   }
 }
-
-?>

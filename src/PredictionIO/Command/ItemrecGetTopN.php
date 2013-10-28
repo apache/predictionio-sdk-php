@@ -108,5 +108,3 @@ class ItemrecGetTopN extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::GET, 'engines/itemrec/' . $this->get('pio_engine') . '/topn', null, $this->getAll());
   }
 }
-
-?>

@@ -34,5 +34,3 @@ class GetUser extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::GET, 'users/' . $this->get('pio_uid'));
   }
 }
-
-?>

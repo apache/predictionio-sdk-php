@@ -34,5 +34,3 @@ class DeleteItem extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::DELETE, 'items/' . $this->get('pio_iid'));
   }
 }
-
-?>

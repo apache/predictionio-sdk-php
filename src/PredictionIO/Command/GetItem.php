@@ -35,5 +35,3 @@ class GetItem extends AbstractCommand
     $this->request = $this->client->createRequest(RequestInterface::GET, 'items/' . $this->get('pio_iid'));
   }
 }
-
-?>
