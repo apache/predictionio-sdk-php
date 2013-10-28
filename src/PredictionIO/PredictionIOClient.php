@@ -89,7 +89,7 @@ class PredictionIOClient extends Client
   /**
    * Returns the identity (user ID) that will be used by all subsequent recording of actions on items, and recommendations retrieval.
    *
-   * @returns string
+   * @return string
    */
   public function getIdentity()
   {
@@ -109,7 +109,7 @@ class PredictionIOClient extends Client
    * @param array|Guzzle\Common\Collection $headers HTTP headers
    * @param string|resource|array|Guzzle\Http\EntityBodyInterface $body Entity body of request (POST/PUT) or response (GET)
    *
-   * @returns Guzzle\Http\Message\RequestInterface
+   * @return Guzzle\Http\Message\RequestInterface
    */
   public function createRequest($method = Guzzle\Http\Message\RequestInterface::GET, $uri = null, $headers = null, $body = null)
   {
