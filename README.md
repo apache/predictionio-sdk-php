@@ -18,13 +18,11 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
 1. Add `predictionio/predictionio` as a dependency in your project's ``composer.json`` file:
 
-```JSON
-{
-    "require": {
-        "predictionio/predictionio": "~0.6.0"
-    }
-}
-```
+        {
+            "require": {
+                "predictionio/predictionio": "~0.6.0"
+            }
+        }
 
 2. Install Composer:
 
@@ -36,9 +34,7 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
 4. Include Composer's autoloader in your PHP code
 
-```PHP
-require_once("vendor/autoload.php");
-```
+        require_once("vendor/autoload.php");
 
 ### By Building Phar
 
@@ -55,7 +51,7 @@ require_once("vendor/autoload.php");
 3. Once the build finishes you will get a Phar in `build/artifacts`, and a set of API documentation.
    Assuming you have copied the Phar to your current working directory, to use the client, simply
 
-        require_once("predictionio.phar");
+        require_once("predictionio.phar");    
 
 
 Supported Commands
