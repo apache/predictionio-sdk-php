@@ -3,6 +3,7 @@
 namespace PredictionIO;
 
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Http\EntityBodyInterface;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Command\AbstractCommand;
@@ -13,7 +14,8 @@ use Guzzle\Service\Command\AbstractCommand;
  * This package is a web service client based on Guzzle.
  * A few quick examples are shown below.
  * For a full user guide on how to take advantage of all Guzzle features, please refer to http://guzzlephp.org.
- * Specifically, http://guzzlephp.org/tour/using_services.html#using-client-objects describes how to use a web service client.
+ * Specifically, http://guzzlephp.org/tour/using_services.html#using-client-objects describes
+ * how to use a web service client.
  *
  * Many REST request commands support optional arguments. They can be supplied to these commands using the set method.
  *
@@ -52,93 +54,92 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class PredictionIOClient extends Client
 {
-  private $apiuid = "";
+    private $apiuid = "";
 
-  /**
-   * Factory method to create a new PredictionIOClient
-   *
-   * Configuration data is an array with these keys:
-   * * appkey - App key of your PredictionIO app (required)
-   * * apiurl - URL of API endpoint (optional)
-   *
-   * @param array|Collection $config Configuration data.
-   *
-   * @return PredictionIOClient
-   */
-  public static function factory($config = array())
-  {
-    $default = array('apiurl' => 'http://localhost:8000');
-    $required = array('appkey');
-    $config = Collection::fromConfig($config, $default, $required);
+    /**
+     * Factory method to create a new PredictionIOClient
+     *
+     * Configuration data is an array with these keys:
+     * * appkey - App key of your PredictionIO app (required)
+     * * apiurl - URL of API endpoint (optional)
+     *
+     * @param array|Collection $config Configuration data.
+     *
+     * @return PredictionIOClient
+     */
+    public static function factory($config = array())
+    {
+        $default = array('apiurl' => 'http://localhost:8000');
+        $required = array('appkey');
+        $config = Collection::fromConfig($config, $default, $required);
 
-    $client = new self($config->get('apiurl'), $config);
+        $client = new self($config->get('apiurl'), $config);
 
-    return $client;
-  }
-
-  /**
-   * Identify the user ID that will be used by all subsequent recording of actions on items, and recommendations retrieval.
-   *
-   * @param string $uid User ID.
-   */
-  public function identify($uid)
-  {
-    $this->apiuid = $uid;
-  }
-
-  /**
-   * Returns the identity (user ID) that will be used by all subsequent recording of actions on items, and recommendations retrieval.
-   *
-   * @return string
-   */
-  public function getIdentity()
-  {
-    if (empty($this->apiuid)) {
-      throw new UnidentifiedUserException("Must call identify() before performing any user-related commands.");
-    }
-    return $this->apiuid;
-  }
-
-  /**
-   * Create and return a new Guzzle\Http\Message\RequestInterface configured for the client.
-   *
-   * Used internally by the library. Do not use directly.
-   *
-   * @param string $method HTTP method. Default to GET.
-   * @param string|array $uri Resource URI
-   * @param array|Guzzle\Common\Collection $headers HTTP headers
-   * @param string|resource|array|Guzzle\Http\EntityBodyInterface $body Entity body of request (POST/PUT) or response (GET)
-   *
-   * @return Guzzle\Http\Message\RequestInterface
-   */
-  public function createRequest($method = Guzzle\Http\Message\RequestInterface::GET, $uri = null, $headers = null, $body = null)
-  {
-    if (is_array($body)) {
-      $body['pio_appkey'] = $this->getConfig()->get("appkey");
-    } else {
-      $body = array('pio_appkey' => $this->getConfig()->get("appkey"));
+        return $client;
     }
 
-    // Remove Guzzle internals to prevent them from going to the API
-    unset($body[AbstractCommand::HEADERS_OPTION]);
-    unset($body[AbstractCommand::ON_COMPLETE]);
-    unset($body[AbstractCommand::DISABLE_VALIDATION]);
-    unset($body[AbstractCommand::RESPONSE_PROCESSING]);
-    unset($body[AbstractCommand::RESPONSE_BODY]);
-
-    if ($method == RequestInterface::GET ||
-        $method == RequestInterface::DELETE) {
-      $request = parent::createRequest($method, $uri, $headers, null);
-      $request->getQuery()->replace($body);
-    } else {
-      $request = parent::createRequest($method, $uri, $headers, $body);
+    /**
+     * Identify the user ID that will be used by all subsequent
+     * recording of actions on items, and recommendations retrieval.
+     *
+     * @param string $uid User ID.
+     */
+    public function identify($uid)
+    {
+        $this->apiuid = $uid;
     }
-    $request->setPath($request->getPath() . ".json");
-    return $request;
-  }
+
+    /**
+     * Returns the identity (user ID) that will be used by all subsequent
+     * recording of actions on items, and recommendations retrieval.
+     *
+     * @return string
+     * @throws UnidentifiedUserException
+     */
+    public function getIdentity()
+    {
+        if (empty($this->apiuid)) {
+            throw new UnidentifiedUserException("Must call identify() before performing any user-related commands.");
+        }
+
+        return $this->apiuid;
+    }
+
+    /**
+     * Create and return a new RequestInterface configured for the client.
+     *
+     * Used internally by the library. Do not use directly.
+     *
+     * @param string                                    $method  HTTP method. Default to GET.
+     * @param string|array                              $uri     Resource URI
+     * @param array|Collection                          $headers HTTP headers
+     * @param string|resource|array|EntityBodyInterface $body    Entity body of request (POST/PUT) or response (GET)
+     *
+     * @return RequestInterface
+     */
+    public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null)
+    {
+        if (is_array($body)) {
+            $body['pio_appkey'] = $this->getConfig()->get("appkey");
+        } else {
+            $body = array('pio_appkey' => $this->getConfig()->get("appkey"));
+        }
+
+        // Remove Guzzle internals to prevent them from going to the API
+        unset($body[AbstractCommand::HEADERS_OPTION]);
+        unset($body[AbstractCommand::ON_COMPLETE]);
+        unset($body[AbstractCommand::DISABLE_VALIDATION]);
+        unset($body[AbstractCommand::RESPONSE_PROCESSING]);
+        unset($body[AbstractCommand::RESPONSE_BODY]);
+
+        if ($method == RequestInterface::GET || $method == RequestInterface::DELETE) {
+            $request = parent::createRequest($method, $uri, $headers, null);
+            $request->getQuery()->replace($body);
+        } else {
+            $request = parent::createRequest($method, $uri, $headers, $body);
+        }
+        $request->setPath($request->getPath() . ".json");
+
+        return $request;
+    }
 }
-
-/**
- * Thrown when user-related commands are called before identify() is called.
- */
-class UnidentifiedUserException extends \Exception { }
