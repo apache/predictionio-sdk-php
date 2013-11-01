@@ -10,7 +10,8 @@ use Guzzle\Service\Command\AbstractCommand;
  *
  * Create or re-create an information record for a user. Re-creation will remove all data of the current record.
  *
- * To supply custom user information, simply pass it in during command creation, or use the "set" method inherited from Guzzle\Common\Collection.
+ * To supply custom user information, simply pass it in during command creation,
+ * or use the "set" method inherited from Guzzle\Common\Collection.
  * <code>
  * $command = $client->getCommand('create_user', array('pio_uid' => 'foobar', 'custom1' => 'baz'));
  * $command->set('custom2', '0xdeadbeef');
@@ -22,49 +23,49 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class CreateUser extends AbstractCommand
 {
-  /**
-   * Set the "uid" parameter for the current command
-   *
-   * @param string $uid User ID
-   *
-   * @return CreateUser
-   */
-  public function setUid($uid)
-  {
-    return $this->set("pio_uid", $uid);
-  }
+    /**
+     * Set the "uid" parameter for the current command
+     *
+     * @param string $uid User ID
+     *
+     * @return CreateUser
+     */
+    public function setUid($uid)
+    {
+        return $this->set("pio_uid", $uid);
+    }
 
-  /**
-   * Set the "latlng" parameter for the current command
-   *
-   * In "latitude,longitude" format, e.g. "20.17,114.08"
-   *
-   * @param string $latlng Latitude and longitude
-   *
-   * @return CreateUser
-   */
-  public function setLatlng($latlng)
-  {
-    return $this->set("pio_latlng", $latlng);
-  }
+    /**
+     * Set the "latlng" parameter for the current command
+     *
+     * In "latitude,longitude" format, e.g. "20.17,114.08"
+     *
+     * @param string $latlng Latitude and longitude
+     *
+     * @return CreateUser
+     */
+    public function setLatlng($latlng)
+    {
+        return $this->set("pio_latlng", $latlng);
+    }
 
-  /**
-   * Set the "inactive" parameter for the current command
-   *
-   * @param bool $inactive Inactive flag (use "true" or "false" string)
-   *
-   * @return CreateUser
-   */
-  public function setInactive($inactive)
-  {
-    return $this->set("pio_inactive", $inactive);
-  }
+    /**
+     * Set the "inactive" parameter for the current command
+     *
+     * @param bool $inactive Inactive flag (use "true" or "false" string)
+     *
+     * @return CreateUser
+     */
+    public function setInactive($inactive)
+    {
+        return $this->set("pio_inactive", $inactive);
+    }
 
-  /**
-   * Create the request object that will carry out the command. Used internally by Guzzle.
-   */
-  protected function build()
-  {
-    $this->request = $this->client->createRequest(RequestInterface::POST, 'users', null, $this->getAll());
-  }
+    /**
+     * Create the request object that will carry out the command. Used internally by Guzzle.
+     */
+    protected function build()
+    {
+        $this->request = $this->client->createRequest(RequestInterface::POST, 'users', null, $this->getAll());
+    }
 }
