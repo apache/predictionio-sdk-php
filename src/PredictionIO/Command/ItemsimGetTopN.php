@@ -20,103 +20,108 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class ItemsimGetTopN extends AbstractCommand
 {
-  /**
-   * Set the "engine" parameter for the current command
-   *
-   * @param string $engine Engine Name
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setEngine($engine)
-  {
-    return $this->set('pio_engine', $engine);
-  }
-
-  /**
-   * Set the "iid" parameter for the current command
-   *
-   * @param string $iid Item ID
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setIid($iid)
-  {
-    return $this->set('pio_iid', $iid);
-  }
-
-  /**
-   * Set the "n" parameter for the current command
-   *
-   * @param integer $n N
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setN($n)
-  {
-    return $this->set('pio_n', $n);
-  }
-
-  /**
-   * Set the "itypes" parameter for the current command
-   *
-   * $itypes can be supplied as an array of integers, or a "," delimited list of integers.
-   *
-   * @param array|string $itypes Item types
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setItypes($itypes)
-  {
-    if (is_array($itypes)) {
-      return $this->set('pio_itypes', implode(',', $itypes));
-    } else {
-      return $this->set('pio_itypes', $itypes);
+    /**
+     * Set the "engine" parameter for the current command
+     *
+     * @param string $engine Engine Name
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setEngine($engine)
+    {
+        return $this->set('pio_engine', $engine);
     }
-  }
 
-  /**
-   * Set the "latlng" parameter for the current command
-   *
-   * In "latitude,longitude" format, e.g. "20.17,114.08"
-   *
-   * @param string $latlng Latitude and longitude
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setLatlng($latlng)
-  {
-    return $this->set('pio_latlng', $latlng);
-  }
+    /**
+     * Set the "iid" parameter for the current command
+     *
+     * @param string $iid Item ID
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setIid($iid)
+    {
+        return $this->set('pio_iid', $iid);
+    }
 
-  /**
-   * Set the "within" parameter for the current command
-   *
-   * @param float $within Radius
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setWithin($within)
-  {
-    return $this->set('pio_within', $within);
-  }
+    /**
+     * Set the "n" parameter for the current command
+     *
+     * @param integer $n N
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setN($n)
+    {
+        return $this->set('pio_n', $n);
+    }
 
-  /**
-   * Set the "unit" parameter for the current command
-   *
-   * @param string $unit Unit of radius
-   *
-   * @return ItemsimGetTopN
-   */
-  public function setUnit($unit)
-  {
-    return $this->set('pio_unit', $unit);
-  }
+    /**
+     * Set the "itypes" parameter for the current command
+     *
+     * $itypes can be supplied as an array of integers, or a "," delimited list of integers.
+     *
+     * @param array|string $itypes Item types
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setItypes($itypes)
+    {
+        if (is_array($itypes)) {
+            return $this->set('pio_itypes', implode(',', $itypes));
+        }
 
-  /**
-   * Create the request object that will carry out the command. Used internally by Guzzle.
-   */
-  protected function build()
-  {
-    $this->request = $this->client->createRequest(RequestInterface::GET, 'engines/itemsim/' . $this->get('pio_engine') . '/topn', null, $this->getAll());
-  }
+        return $this->set('pio_itypes', $itypes);
+    }
+
+    /**
+     * Set the "latlng" parameter for the current command
+     *
+     * In "latitude,longitude" format, e.g. "20.17,114.08"
+     *
+     * @param string $latlng Latitude and longitude
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setLatlng($latlng)
+    {
+        return $this->set('pio_latlng', $latlng);
+    }
+
+    /**
+     * Set the "within" parameter for the current command
+     *
+     * @param float $within Radius
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setWithin($within)
+    {
+        return $this->set('pio_within', $within);
+    }
+
+    /**
+     * Set the "unit" parameter for the current command
+     *
+     * @param string $unit Unit of radius
+     *
+     * @return ItemsimGetTopN
+     */
+    public function setUnit($unit)
+    {
+        return $this->set('pio_unit', $unit);
+    }
+
+    /**
+     * Create the request object that will carry out the command. Used internally by Guzzle.
+     */
+    protected function build()
+    {
+        $this->request = $this->client->createRequest(
+            RequestInterface::GET,
+            'engines/itemsim/' . $this->get('pio_engine') . '/topn',
+            null,
+            $this->getAll()
+        );
+    }
 }

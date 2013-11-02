@@ -10,7 +10,8 @@ use Guzzle\Service\Command\AbstractCommand;
  *
  * Create or re-create an information record for a item. Re-creation will remove all data of the current record.
  *
- * To supply custom item information, simply pass it in during command creation, or use the "set" method inherited from Guzzle\Common\Collection.
+ * To supply custom item information, simply pass it in during command creation,
+ * or use the "set" method inherited from Guzzle\Common\Collection.
  * <code>
  * $command = $client->getCommand('create_item', array('pio_iid' => 'foobar', 'custom1' => 'baz'));
  * $command->set('custom2', '0xdeadbeef');
@@ -27,115 +28,115 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class CreateItem extends AbstractCommand
 {
-  /**
-   * Set the "iid" parameter for the current command
-   *
-   * @param string $iid Item ID
-   *
-   * @return CreateItem
-   */
-  public function setIid($iid)
-  {
-    return $this->set("pio_iid", $iid);
-  }
-
-  /**
-   * Set the "itypes" parameter for the current command
-   *
-   * $itypes can be supplied as an array of strings, or a "," delimited list of strings.
-   *
-   * @param array|string $itypes Item types
-   *
-   * @return CreateItem
-   */
-  public function setItypes($itypes)
-  {
-    if (is_array($itypes)) {
-      return $this->set("pio_itypes", implode(",", $itypes));
-    } else {
-      return $this->set("pio_itypes", $itypes);
+    /**
+     * Set the "iid" parameter for the current command
+     *
+     * @param string $iid Item ID
+     *
+     * @return CreateItem
+     */
+    public function setIid($iid)
+    {
+        return $this->set("pio_iid", $iid);
     }
-  }
 
-  /**
-   * Set the "startT" parameter for the current command
-   *
-   * @param string $startT Start time
-   *
-   * @return CreateItem
-   */
-  public function setStartT($startT)
-  {
-    return $this->set("pio_startT", $startT);
-  }
+    /**
+     * Set the "itypes" parameter for the current command
+     *
+     * $itypes can be supplied as an array of strings, or a "," delimited list of strings.
+     *
+     * @param array|string $itypes Item types
+     *
+     * @return CreateItem
+     */
+    public function setItypes($itypes)
+    {
+        if (is_array($itypes)) {
+            return $this->set("pio_itypes", implode(",", $itypes));
+        }
 
-  /**
-   * Set the "endT" parameter for the current command
-   *
-   * @param string $endT End time
-   *
-   * @return CreateItem
-   */
-  public function setEndT($endT)
-  {
-    return $this->set("pio_endT", $endT);
-  }
+        return $this->set("pio_itypes", $itypes);
+    }
 
-  /**
-   * Set the "price" parameter for the current command
-   *
-   * @param float $price Price
-   *
-   * @return CreateItem
-   */
-  public function setPrice($price)
-  {
-    return $this->set("pio_price", $price);
-  }
+    /**
+     * Set the "startT" parameter for the current command
+     *
+     * @param string $startT Start time
+     *
+     * @return CreateItem
+     */
+    public function setStartT($startT)
+    {
+        return $this->set("pio_startT", $startT);
+    }
 
-  /**
-   * Set the "profit" parameter for the current command
-   *
-   * @param float $profit Profit
-   *
-   * @return CreateItem
-   */
-  public function setProfit($profit)
-  {
-    return $this->set("pio_profit", $profit);
-  }
+    /**
+     * Set the "endT" parameter for the current command
+     *
+     * @param string $endT End time
+     *
+     * @return CreateItem
+     */
+    public function setEndT($endT)
+    {
+        return $this->set("pio_endT", $endT);
+    }
 
-  /**
-   * Set the "latlng" parameter for the current command
-   *
-   * In "latitude,longitude" format, e.g. "20.17,114.08"
-   *
-   * @param string $latlng Latitude and longitude
-   *
-   * @return CreateItem
-   */
-  public function setLatlng($latlng)
-  {
-    return $this->set("pio_latlng", $latlng);
-  }
+    /**
+     * Set the "price" parameter for the current command
+     *
+     * @param float $price Price
+     *
+     * @return CreateItem
+     */
+    public function setPrice($price)
+    {
+        return $this->set("pio_price", $price);
+    }
 
-  /**
-   * Set the "inactive" parameter for the current command
-   *
-   * @param string $inactive Inactive flag (use "true" or "false" string)
-   *
-   * @return CreateItem
-   */
-  public function setInactive($inactive)
-  {
-    return $this->set("inactive", $inactive);
-  }
+    /**
+     * Set the "profit" parameter for the current command
+     *
+     * @param float $profit Profit
+     *
+     * @return CreateItem
+     */
+    public function setProfit($profit)
+    {
+        return $this->set("pio_profit", $profit);
+    }
 
-  /**
-   * Create the request object that will carry out the command. Used internally by Guzzle.
-   */
-  protected function build()
-  {
-    $this->request = $this->client->createRequest(RequestInterface::POST, 'items', null, $this->getAll());
-  }
+    /**
+     * Set the "latlng" parameter for the current command
+     *
+     * In "latitude,longitude" format, e.g. "20.17,114.08"
+     *
+     * @param string $latlng Latitude and longitude
+     *
+     * @return CreateItem
+     */
+    public function setLatlng($latlng)
+    {
+        return $this->set("pio_latlng", $latlng);
+    }
+
+    /**
+     * Set the "inactive" parameter for the current command
+     *
+     * @param string $inactive Inactive flag (use "true" or "false" string)
+     *
+     * @return CreateItem
+     */
+    public function setInactive($inactive)
+    {
+        return $this->set("inactive", $inactive);
+    }
+
+    /**
+     * Create the request object that will carry out the command. Used internally by Guzzle.
+     */
+    protected function build()
+    {
+        $this->request = $this->client->createRequest(RequestInterface::POST, 'items', null, $this->getAll());
+    }
 }

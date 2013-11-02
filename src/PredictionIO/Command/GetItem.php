@@ -15,23 +15,23 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class GetItem extends AbstractCommand
 {
-  /**
-   * Set the "iid" parameter for the current command
-   *
-   * @param string $iid Item ID
-   *
-   * @return GetItem
-   */
-  public function setIid($iid)
-  {
-    return $this->set('pio_iid', $iid);
-  }
+    /**
+     * Set the "iid" parameter for the current command
+     *
+     * @param string $iid Item ID
+     *
+     * @return GetItem
+     */
+    public function setIid($iid)
+    {
+        return $this->set('pio_iid', $iid);
+    }
 
-  /**
-   * Create the request object that will carry out the command. Used internally by Guzzle.
-   */
-  protected function build()
-  {
-    $this->request = $this->client->createRequest(RequestInterface::GET, 'items/' . $this->get('pio_iid'));
-  }
+    /**
+     * Create the request object that will carry out the command. Used internally by Guzzle.
+     */
+    protected function build()
+    {
+        $this->request = $this->client->createRequest(RequestInterface::GET, 'items/' . $this->get('pio_iid'));
+    }
 }

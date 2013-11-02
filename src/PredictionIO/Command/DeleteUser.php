@@ -14,23 +14,23 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class DeleteUser extends AbstractCommand
 {
-  /**
-   * Set the "uid" parameter for the current command
-   *
-   * @param string $uid User ID
-   *
-   * @return DeleteUser
-   */
-  public function setUid($uid)
-  {
-    return $this->set('pio_uid', $uid);
-  }
+    /**
+     * Set the "uid" parameter for the current command
+     *
+     * @param string $uid User ID
+     *
+     * @return DeleteUser
+     */
+    public function setUid($uid)
+    {
+        return $this->set('pio_uid', $uid);
+    }
 
-  /**
-   * Create the request object that will carry out the command. Used internally by Guzzle.
-   */
-  protected function build()
-  {
-    $this->request = $this->client->createRequest(RequestInterface::DELETE, 'users/' . $this->get('pio_uid'));
-  }
+    /**
+     * Create the request object that will carry out the command. Used internally by Guzzle.
+     */
+    protected function build()
+    {
+        $this->request = $this->client->createRequest(RequestInterface::DELETE, 'users/' . $this->get('pio_uid'));
+    }
 }
