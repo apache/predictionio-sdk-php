@@ -1,6 +1,10 @@
 PredictionIO PHP SDK
 ====================
 
+We use [scrutinizer-ci](https://scrutinizer-ci.com/) to keep track of code quality:
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/badges/quality-score.png?s=bba570e3add382f4f56fcba65ec0b4f0b8622091)](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/)
+
+
 Prerequisites
 -------------
 
@@ -8,6 +12,7 @@ Prerequisites
 * PHP: cURL (http://php.net/manual/en/book.curl.php)
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
+
 
 Getting Started
 ---------------
@@ -59,6 +64,7 @@ Supported Commands
 
 For a list of supported commands, please refer to the API documentation.
 
+
 Usage
 -----
 
@@ -71,12 +77,14 @@ Specifically, http://guzzlephp.org/tour/using_services.html#using-client-objects
 Many REST request commands support optional arguments.
 They can be supplied to these commands by the `set` method.
 
+
 ### Instantiate PredictionIO API Client
 
 ```PHP
 use PredictionIO\PredictionIOClient;
 $client = PredictionIOClient::factory(array("appkey" => "<your app key>"));
 ```
+
 
 ### Import a User Record from Your App
 
@@ -86,6 +94,7 @@ $command = $client->getCommand('create_user', array('pio_uid' => 5));
 $response = $client->execute($command);
 ```
 
+
 ### Import an Item Record from Your App
 
 ```PHP
@@ -94,6 +103,7 @@ $command = $client->getCommand('create_item', array('pio_iid' => 'bookId1', 'pio
 $response = $client->execute($command);
 ```
 
+
 ### Import a User Action (View) form Your App
 
 ```PHP
@@ -101,6 +111,7 @@ $response = $client->execute($command);
 $client->identify('5');
 $client->execute($client->getCommand('record_action_on_item', array('pio_action' => 'view', 'pio_iid' => 'bookId1')));
 ```
+
 
 ### Retrieving Top N Recommendations for a User
 
@@ -116,6 +127,7 @@ try {
     echo 'Caught exception: ', $e->getMessage(), "\n";
 }
 ```
+
 
 ### Retrieving Top N Similar Items for an Item
 
