@@ -6,7 +6,7 @@ We use [scrutinizer-ci](https://scrutinizer-ci.com/) to keep track of code quali
 
 
 Prerequisites
--------------
+=============
 
 * PHP 5.3+ (http://php.net/)
 * PHP: cURL (http://php.net/manual/en/book.curl.php)
@@ -14,10 +14,30 @@ Prerequisites
 * ApiGen (http://apigen.org/)
 
 
-Getting Started
----------------
+Support
+=======
 
-### By Composer
+
+Forum
+-----
+
+https://groups.google.com/group/predictionio-user
+
+
+Issue Tracker
+-------------
+
+https://predictionio.atlassian.net
+
+If you are unsure whether a behavior is an issue, bringing it up in the forum is highly encouraged.
+
+
+Getting Started
+===============
+
+
+By Composer
+-----------
 
 The easiest way to install PredictionIO PHP client is to use [Composer](http://getcomposer.org/).
 
@@ -41,7 +61,9 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
         require_once("vendor/autoload.php");
 
-### By Building Phar
+
+By Building Phar
+----------------
 
 1. Assuming you are cloning to your home directory:
 
@@ -60,13 +82,14 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
 
 Supported Commands
-------------------
+==================
 
-For a list of supported commands, please refer to the API documentation.
+For a list of supported commands, please refer to the
+[API documentation](http://docs.prediction.io/php/api/).
 
 
 Usage
------
+=====
 
 This package is a web service client based on Guzzle.
 A few quick examples are shown below.
@@ -78,7 +101,8 @@ Many REST request commands support optional arguments.
 They can be supplied to these commands by the `set` method.
 
 
-### Instantiate PredictionIO API Client
+Instantiate PredictionIO API Client
+-----------------------------------
 
 ```PHP
 use PredictionIO\PredictionIOClient;
@@ -86,7 +110,8 @@ $client = PredictionIOClient::factory(array("appkey" => "<your app key>"));
 ```
 
 
-### Import a User Record from Your App
+Import a User Record from Your App
+----------------------------------
 
 ```PHP
 // assume you have a user with user ID 5
@@ -95,7 +120,8 @@ $response = $client->execute($command);
 ```
 
 
-### Import an Item Record from Your App
+Import an Item Record from Your App
+-----------------------------------
 
 ```PHP
 // assume you have a book with ID 'bookId1' and we assign 1 as the type ID for book
@@ -104,7 +130,8 @@ $response = $client->execute($command);
 ```
 
 
-### Import a User Action (View) form Your App
+Import a User Action (View) form Your App
+-----------------------------------------
 
 ```PHP
 // assume this user has viewed this book item
@@ -113,7 +140,8 @@ $client->execute($client->getCommand('record_action_on_item', array('pio_action'
 ```
 
 
-### Retrieving Top N Recommendations for a User
+Retrieving Top N Recommendations for a User
+-------------------------------------------
 
 ```PHP
 try {
@@ -129,7 +157,8 @@ try {
 ```
 
 
-### Retrieving Top N Similar Items for an Item
+Retrieving Top N Similar Items for an Item
+------------------------------------------
 
 ```PHP
 try {
