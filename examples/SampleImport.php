@@ -12,9 +12,6 @@ if (!isset($argv[1]) || !isset($argv[2])) {
 $appkey = $argv[1];
 $input = $argv[2];
 
-// Instantiate a client
-$client = PredictionIOClient::factory(array("appkey" => $appkey));
-
 if (!file_exists($input)) {
 	print "$input not found!\n";
 	exit(1);
@@ -24,6 +21,9 @@ if (!is_readable($input)) {
 	print "$input cannot be read!\n";
 	exit(1);
 }
+
+// Instantiate a client
+$client = PredictionIOClient::factory(array("appkey" => $appkey));
 
 // Scan sample data file and import ratings
 $handle = fopen($input, "r");
