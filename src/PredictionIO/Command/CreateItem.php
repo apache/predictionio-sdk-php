@@ -111,13 +111,18 @@ class CreateItem extends AbstractCommand
      *
      * In "latitude,longitude" format, e.g. "20.17,114.08"
      *
-     * @param string $latlng Latitude and longitude
+     * @param string $lat Latitude
+     * @param string $lng Longitude
      *
      * @return CreateItem
      */
-    public function setLatlng($latlng)
+    public function setLatlng($lat,$lng=null)
     {
-        return $this->set("pio_latlng", $latlng);
+        if ($lng === null) {
+            return $this->set("pio_latlng", $lat);
+        } else {
+            return $this->set("pio_latlng", sprintf("%s,%s", $lat, $lng));
+        }
     }
 
     /**
