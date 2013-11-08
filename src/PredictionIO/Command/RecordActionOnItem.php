@@ -62,13 +62,13 @@ class RecordActionOnItem extends AbstractCommand
      *
      * @return RecordActionOnItem
      */
-    public function setLatlng($lat,$lng=null)
+    public function setLatlng($lat, $lng = null)
     {
-        if ($lng === null) {
+        if (null === $lng) {
             return $this->set("pio_latlng", $lat);
-        } else {
-            return $this->set("pio_latlng", sprintf("%s,%s", $lat, $lng));
         }
+
+        return $this->set("pio_latlng", sprintf("%s,%s", $lat, $lng));
     }
 
     /**
