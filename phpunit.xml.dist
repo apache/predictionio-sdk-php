@@ -9,7 +9,7 @@
         >
     <testsuites>
         <testsuite name="PredictionIO Unit Test Suite">
-            <directory>./tests/unit</directory>
+            <directory>./tests/Unit</directory>
         </testsuite>
     </testsuites>
 
