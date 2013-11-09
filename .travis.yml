@@ -6,4 +6,5 @@ php:
 before_script:
   - pear channel-discover pear.phing.info
   - pear install phing/phing
+  - phpenv rehash
   - phing
