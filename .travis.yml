@@ -4,4 +4,6 @@ php:
   - 5.4
   - 5.3
 before_script:
+  - pear channel-discover pear.phing.info
+  - pear install --alldeps phing/phing
   - phing
