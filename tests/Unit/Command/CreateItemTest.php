@@ -93,6 +93,6 @@ class CreateItemTest extends \PHPUnit_Framework_TestCase
         $createItemCommand = new CreateItem();
         $createItemCommand->setInactive($mockInactive);
 
-        $this->assertSame($mockInactive, $createItemCommand->get('inactive'));
+        $this->assertSame($mockInactive, $createItemCommand->get('pio_inactive'));
     }
 }

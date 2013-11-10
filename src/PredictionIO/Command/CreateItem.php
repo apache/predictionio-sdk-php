@@ -134,7 +134,7 @@ class CreateItem extends AbstractCommand
      */
     public function setInactive($inactive)
     {
-        return $this->set("inactive", $inactive);
+        return $this->set("pio_inactive", $inactive);
     }
 
     /**
