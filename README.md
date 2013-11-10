@@ -2,10 +2,8 @@ PredictionIO PHP SDK
 ====================
 
 [![Build Status](https://travis-ci.org/PredictionIO/PredictionIO-PHP-SDK.png?branch=develop)](https://travis-ci.org/PredictionIO/PredictionIO-PHP-SDK)
-
-We use [scrutinizer-ci](https://scrutinizer-ci.com/) to keep track of code quality:
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/badges/quality-score.png?s=bba570e3add382f4f56fcba65ec0b4f0b8622091)](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/)
-
+[![Code Coverage](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/badges/coverage.png?s=db1de9fde081fedd79346b4aba562ab56853ed45)](https://scrutinizer-ci.com/g/PredictionIO/PredictionIO-PHP-SDK/)
 
 Prerequisites
 =============
