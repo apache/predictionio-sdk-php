@@ -80,7 +80,7 @@ class PredictionIOClientTest extends \PHPUnit_Framework_TestCase
 
     public function testSetGetIdentitySuccess()
     {
-        $mockId = 1234;
+        $mockId = "0";
         $client = new PredictionIOClient();
         $client->identify($mockId);
 

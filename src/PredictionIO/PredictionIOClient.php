@@ -54,7 +54,7 @@ use Guzzle\Service\Command\AbstractCommand;
  */
 class PredictionIOClient extends Client
 {
-    private $apiuid = "";
+    private $apiuid = NULL;
 
     /**
      * Factory method to create a new PredictionIOClient
@@ -98,7 +98,7 @@ class PredictionIOClient extends Client
      */
     public function getIdentity()
     {
-        if (empty($this->apiuid)) {
+        if (!isset($this->apiuid)) {
             throw new UnidentifiedUserException("Must call identify() before performing any user-related commands.");
         }
 
