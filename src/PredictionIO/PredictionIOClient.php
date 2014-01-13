@@ -114,10 +114,11 @@ class PredictionIOClient extends Client
      * @param string|array                              $uri     Resource URI
      * @param array|Collection                          $headers HTTP headers
      * @param string|resource|array|EntityBodyInterface $body    Entity body of request (POST/PUT) or response (GET)
+     * @param array                                     $options Array of options to apply to the request
      *
      * @return RequestInterface
      */
-    public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null)
+    public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null, array $options = array())
     {
         if (is_array($body)) {
             $body['pio_appkey'] = $this->getConfig()->get("appkey");
@@ -133,10 +134,10 @@ class PredictionIOClient extends Client
         unset($body[AbstractCommand::RESPONSE_BODY]);
 
         if ($method == RequestInterface::GET || $method == RequestInterface::DELETE) {
-            $request = parent::createRequest($method, $uri, $headers, null);
+            $request = parent::createRequest($method, $uri, $headers, null, $options);
             $request->getQuery()->replace($body);
         } else {
-            $request = parent::createRequest($method, $uri, $headers, $body);
+            $request = parent::createRequest($method, $uri, $headers, $body, $options);
         }
         $request->setPath($request->getPath() . ".json");
 
