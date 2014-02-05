@@ -132,6 +132,7 @@ class PredictionIOClient extends Client
         unset($body[AbstractCommand::DISABLE_VALIDATION]);
         unset($body[AbstractCommand::RESPONSE_PROCESSING]);
         unset($body[AbstractCommand::RESPONSE_BODY]);
+        unset($body[AbstractCommand::HIDDEN_PARAMS]);
 
         if ($method == RequestInterface::GET || $method == RequestInterface::DELETE) {
             $request = parent::createRequest($method, $uri, $headers, null, $options);
