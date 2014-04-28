@@ -14,10 +14,10 @@
     ],
     "require": {
     	"php": ">=5.3.2",
-    	"guzzle/guzzle": "~3.8.0"
+    	"guzzle/guzzle": "~3.8"
     },
     "require-dev": {
-    	"symfony/class-loader": "*"
+    	"symfony/class-loader": "~2.1"
     },
     "autoload": {
         "psr-0": {
