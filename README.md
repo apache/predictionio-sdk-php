@@ -173,8 +173,8 @@ try {
 ```
 
 
-Retrieving Ranking for Items for a User
----------------------------------------
+Retrieving Ranking of Items for a User
+--------------------------------------
 
 ```PHP
 try {
