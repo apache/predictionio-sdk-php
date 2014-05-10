@@ -78,7 +78,7 @@ By Building Phar
 3. Once the build finishes you will get a Phar in `build/artifacts`, and a set of API documentation.
    Assuming you have copied the Phar to your current working directory, to use the client, simply
 
-        require_once("predictionio.phar");    
+        require_once("predictionio.phar");
 
 
 Supported Commands
@@ -164,7 +164,23 @@ Retrieving Top N Similar Items for an Item
 try {
     // assume you have created an itemsim engine named 'engine2'
     // we try to get top 10 similar items for an item (item ID 6)
-    $command = $client->getCommand('itemsim_get_top_n', array('pio_iid' => '6', 'pio_engine' => 'engine1', 'pio_n' => 10));
+    $command = $client->getCommand('itemsim_get_top_n', array('pio_iid' => '6', 'pio_engine' => 'engine2', 'pio_n' => 10));
+    $rec = $client->execute($command);
+    print_r($rec);
+} catch (Exception $e) {
+    echo 'Caught exception: ', $e->getMessage(), "\n";
+}
+```
+
+
+Retrieving Ranking of Items for a User
+--------------------------------------
+
+```PHP
+try {
+    // assume you have created an itemrank engine named 'engine3'
+    // we try to get ranking of 5 items (item IDs: 1, 2, 3, 4, 5) for a user (user ID 7)
+    $command = $client->getCommand('itemrank_get_ranked', array('pio_uid' => '7', 'pio_iids' => '1,2,3,4,5', 'pio_engine' => 'engine3'));
     $rec = $client->execute($command);
     print_r($rec);
 } catch (Exception $e) {
