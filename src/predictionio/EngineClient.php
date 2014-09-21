@@ -13,7 +13,7 @@ class EngineClient extends BaseClient {
    * @param float Timeout of the request in seconds. Use 0 to wait indefinitely
    *              Default is 0.
    * @param float Number of seconds to wait while trying to connect to a server.
-   *              Default is 5.                
+   *              Default is 5.
    */
   public function __construct($baseUrl="http://localhost:8000",
                               $timeout=0, $connectTimeout=5 ) {
@@ -26,11 +26,11 @@ class EngineClient extends BaseClient {
    * @param array Query
    *
    * @return array JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function sendQuery(array $query) {
-    return $this->sendRequest("POST", "/", json_encode($query));
+    return $this->sendRequest("POST", "/queries.json", json_encode($query));
   }
 }
 

@@ -27,9 +27,9 @@ class EngineClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(5,$body['uid']);
     $this->assertEquals(array(1,2,3),$body['iids']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:8000/',$request->getUrl());
+    $this->assertEquals('http://localhost:8000/queries.json',$request->getUrl());
   }
 
 }
 
-?> 
+?>
