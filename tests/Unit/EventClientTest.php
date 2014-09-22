@@ -248,6 +248,22 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('http://localhost:7070/events.json',$request->getUrl());
   }
 
+  public function testCreateEventUsesAppIdInClient() {
+    $this->eventClient->createEvent(array(
+                        'appId' => 99,
+                        'event' => 'my_event',
+                        'entityType' => 'user',
+                        'entityId' => 'uid',
+                        'properties' => array('prop1'=>1),
+                        'eventTime' => '2004-12-13T21:39:45.618-07:00'
+                       ));
+    $request=$this->history->getLastRequest();
+    $body=json_decode($request->getBody(), true);
+
+    // ignores appId in data and uses the one defined in the event client
+    $this->assertEquals(8,$body['appId']);
+  }
+
   public function testGetEvent() {
     $this->eventClient->getEvent('event_id');
     $request=$this->history->getLastRequest();

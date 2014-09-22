@@ -13,6 +13,8 @@ Prerequisites
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
 
+Note: This SDK only supports Prediction IO version 0.8 or higher.
+
 Support
 =======
 
