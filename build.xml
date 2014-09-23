@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="predictionio" default="package">
+<project name="predictionio" default="install-dependencies">
 
-  <property name="dir.output" value="${project.basedir}/build/artifacts" />
-
-  <target name="clean">
-    <delete dir="${dir.output}" />
-  </target>
-
-  <target name="prepare" depends="clean">
-    <mkdir dir="${dir.output}" />
-  </target>
-
-  <target name="install-dependencies" depends="prepare">
+  <target name="install-dependencies">
     <if>
       <available file="composer.phar" />
       <then>
@@ -35,24 +25,7 @@
     <exec command="php composer.phar update --dev" passthru="true" />
   </target>
 
-  <target name="package" depends="install-dependencies" description="Create a PHAR with an autoloader">
-    <pharpackage
-    	destfile="${dir.output}/predictionio.phar"
-    	basedir="."
-    	stub="phar-stub.php">
-      <fileset dir=".">
-      	<include name="src/**/*.php" />
-      	<include name="src/**/*.json" />
-        <include name="vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php" />
-        <include name="vendor/symfony/event-dispatcher/**/*.php" />
-      	<include name="vendor/guzzle/guzzle/src/Guzzle/**/*.php" />
-        <include name="vendor/guzzle/guzzle/src/Guzzle/Http/Resources/cacert.pem" />
-        <include name="vendor/guzzle/guzzle/src/Guzzle/Http/Resources/cacert.pem.md5" />
-      </fileset>
-      <metadata>
-        <element name="author" value="PredictionIO" />
-      </metadata>
-    </pharpackage>
+  <target name="apigen">
     <exec command="apigen -s src -d docs --title 'PredictionIO API PHP Client'" passthru="true" />
   </target>
 
