@@ -266,6 +266,15 @@ class EventClient extends BaseClient {
   public function getEvent($eventId) {
     return $this->sendRequest('GET', "/events/$eventId.json", '');
   }
-}
 
-?>
+  /**
+   * Delete all events for appId
+   *
+   * @return string JSON response
+   *
+   * @throws PredictionIOAPIError Request error
+   */
+  public function deleteAllEvents() {
+    return $this->sendRequest('DELETE', "events.json?appId={$this->appId}", '');
+  }
+}
