@@ -10,19 +10,22 @@ use \DateTime;
  */
 class EventClient extends BaseClient {
   const DATE_TIME_FORMAT = DateTime::ISO8601;
-  private $appId;
+  private $accessKey;
+  private $eventUrl;
 
   /**
+   * @param string Access Key
    * @param string Base URL to the Event Server. Default is localhost:7070.
    * @param float Timeout of the request in seconds. Use 0 to wait indefinitely
    *              Default is 0.
    * @param float Number of seconds to wait while trying to connect to a server.
    *              Default is 5.                
    */
-  public function __construct($appId, $baseUrl='http://localhost:7070',
+  public function __construct($accessKey, $baseUrl='http://localhost:7070',
                               $timeout=0, $connectTimeout=5 ) {
     parent::__construct($baseUrl, $timeout, $connectTimeout);
-    $this->appId = $appId;
+    $this->accessKey = $accessKey;
+    $this->eventUrl = "/events.json?accessKey=$this->accessKey";
   }
 
   private function getEventTime($eventTime) {
@@ -57,12 +60,11 @@ class EventClient extends BaseClient {
         'event' => '$set',
         'entityType' => 'pio_user',
         'entityId' => $uid,
-        'appId' => $this->appId,
         'properties' => $properties,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -87,12 +89,11 @@ class EventClient extends BaseClient {
         'event' => '$unset',
         'entityType' => 'pio_user',
         'entityId' => $uid,
-        'appId' => $this->appId,
         'properties' => $properties,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -114,11 +115,10 @@ class EventClient extends BaseClient {
         'event' => '$delete',
         'entityType' => 'pio_user',
         'entityId' => $uid,
-        'appId' => $this->appId,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
  
   /**
@@ -141,12 +141,11 @@ class EventClient extends BaseClient {
         'event' => '$set',
         'entityType' => 'pio_item',
         'entityId' => $iid,
-        'appId' => $this->appId,
         'properties' => $properties,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -170,12 +169,11 @@ class EventClient extends BaseClient {
         'event' => '$unset',
         'entityType' => 'pio_item',
         'entityId' => $iid,
-        'appId' => $this->appId,
         'properties' => $properties,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -197,11 +195,10 @@ class EventClient extends BaseClient {
         'event' => '$delete',
         'entityType' => 'pio_item',
         'entityId' => $iid,
-        'appId' => $this->appId,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -230,12 +227,11 @@ class EventClient extends BaseClient {
         'entityId' => $uid,
         'targetEntityType' => 'pio_item',
         'targetEntityId' => $iid,
-        'appId' => $this->appId,
         'properties' => $properties,
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -248,10 +244,9 @@ class EventClient extends BaseClient {
    * @throws PredictionIOAPIError Request error
    */
   public function createEvent(array $data) {
-    $data['appId'] = $this->appId;
     $json = json_encode($data);
 
-    return $this->sendRequest('POST', '/events.json', $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json);
   }
 
   /**
@@ -264,7 +259,8 @@ class EventClient extends BaseClient {
    * @throws PredictionIOAPIError Request error
    */
   public function getEvent($eventId) {
-    return $this->sendRequest('GET', "/events/$eventId.json", '');
+    return $this->sendRequest('GET', 
+      "/events/$eventId.json?accessKey=$this->accessKey", '');
   }
 }
 

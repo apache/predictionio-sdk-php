@@ -6,7 +6,8 @@ use predictionio\PredictionIOAPIError;
 
 try {
   // check Event Server status
-  $client = new EventClient(25);
+  $client = new EventClient(
+    "j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O");
   $response=$client->getStatus();
   echo($response);
 
@@ -50,7 +51,6 @@ try {
 
   // create event
   $response=$client->createEvent(array(
-                        'appId' => 25,
                         'event' => 'my_event',
                         'entityType' => 'pio_user',
                         'entityId' => '8',
@@ -59,7 +59,7 @@ try {
   print_r($response); 
 
   // get event
-  $response=$client->getEvent('event_id_goes_here');
+  $response=$client->getEvent('U_7eotSbeeK0BwshqEfRFAAAAUm-8gOyjP3FR73aBFo');
   print_r($response);                       
 
 } catch (PredictionIOAPIError $e) {
