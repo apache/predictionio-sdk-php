@@ -13,7 +13,7 @@ Prerequisites
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
 
-Note: This SDK only supports Prediction IO version 0.8 or higher.
+Note: This SDK only supports Prediction IO version 0.8.2 or higher.
 
 Support
 =======
@@ -46,7 +46,7 @@ The easiest way to install PredictionIO PHP client is to use [Composer](http://g
 
         {
             "require": {
-                "predictionio/predictionio": "~0.8.0"
+                "predictionio/predictionio": "~0.8.2"
             }
         }
 
@@ -81,8 +81,8 @@ Instantiate PredictionIO API Event Client
 
 ```PHP
 use predictionio\EventClient;
-$app_id = 8;
-$client = new EventClient($app_id, 'http://localhost:7070');
+$accessKey = 'j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O';
+$client = new EventClient($accessKey, 'http://localhost:7070');
 ```
 
 Set a User Record from Your App

@@ -4,7 +4,7 @@ require_once("vendor/autoload.php");
 use predictionio\EventClient;
 
 // check Event Server status
-$client = new EventClient(88);
+$client = new EventClient("j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O");
 $response=$client->getStatus();
 echo($response);
 
