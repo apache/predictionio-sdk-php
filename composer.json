@@ -25,7 +25,7 @@
         "guzzlehttp/guzzle": "~4.0"
     },
     "require-dev": {
-        "symfony/class-loader": "*"
+        "symfony/class-loader": "~2.3"
     },
     "autoload": {
         "psr-0": {
