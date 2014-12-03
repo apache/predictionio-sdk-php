@@ -28,8 +28,8 @@
         "symfony/class-loader": "*"
     },
     "autoload": {
-        "psr-0": {
-            "predictionio": "src/"
+        "psr-4": {
+            "predictionio\\": "src/predictionio/"
         }
     }
 }
