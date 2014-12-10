@@ -99,7 +99,7 @@ Set an Item Record from Your App
 
 ```PHP
 // assume you have a book with ID 'bookId1' and we assign 1 as the type ID for book
-$response = $client->setItem('bookId1', array('pio_itypes' => 1));
+$response = $client->setItem('bookId1', array('itypes' => 1));
 ```
 
 
