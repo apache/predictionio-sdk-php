@@ -26,7 +26,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
-    $this->assertEquals('pio_user',$body['entityType']);
+    $this->assertEquals('user',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertEquals(20,$body['properties']['age']);
     $this->assertNotNull($body['eventTime']);
@@ -51,7 +51,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
-    $this->assertEquals('pio_user',$body['entityType']);
+    $this->assertEquals('user',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertEquals(20,$body['properties']['age']);
     $this->assertNotNull($body['eventTime']);
@@ -83,7 +83,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
-    $this->assertEquals('pio_user',$body['entityType']);
+    $this->assertEquals('user',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
@@ -107,7 +107,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
-    $this->assertEquals('pio_item',$body['entityType']);
+    $this->assertEquals('item',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertEquals('book',$body['properties']['type']);
     $this->assertNotNull($body['eventTime']);
@@ -132,7 +132,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
-    $this->assertEquals('pio_item',$body['entityType']);
+    $this->assertEquals('item',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertEquals('book',$body['properties']['type']);
     $this->assertNotNull($body['eventTime']);
@@ -164,7 +164,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
-    $this->assertEquals('pio_item',$body['entityType']);
+    $this->assertEquals('item',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
@@ -188,9 +188,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('view',$body['event']);
-    $this->assertEquals('pio_user',$body['entityType']);
+    $this->assertEquals('user',$body['entityType']);
     $this->assertEquals(1,$body['entityId']);
-    $this->assertEquals('pio_item',$body['targetEntityType']);
+    $this->assertEquals('item',$body['targetEntityType']);
     $this->assertEquals(888,$body['targetEntityId']);
     $this->assertEquals(2,$body['properties']['count']);
     $this->assertNotNull($body['eventTime']);

@@ -16,7 +16,7 @@ for ($u=1; $u<=10; $u++) {
 
 // set item - generate 50 items
 for ($i=1; $i<=50; $i++) {
-  $response=$client->setItem($i, array('pio_itypes'=>array('1')));
+  $response=$client->setItem($i, array('itypes'=>array('1')));
   print_r($response);
 }
 
