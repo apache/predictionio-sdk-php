@@ -22,14 +22,14 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~5.0"
     },
     "require-dev": {
-        "symfony/class-loader": "*"
+        "symfony/class-loader": "~2.3"
     },
     "autoload": {
-        "psr-0": {
-            "predictionio": "src/"
+        "psr-4": {
+            "predictionio\\": "src/predictionio/"
         }
     }
 }

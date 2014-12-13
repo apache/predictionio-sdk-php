@@ -29,16 +29,16 @@ try {
   print_r($response);
   
   // set item with event time
-  $response=$client->setItem(3, array('pio_itypes'=>array('1')), 
+  $response=$client->setItem(3, array('itypes'=>array('1')), 
                         '2013-12-20T05:15:25.350+08:00');
   print_r($response);
 
   // set item 
-  $response=$client->setItem(2, array('pio_itypes'=>array('1')));
+  $response=$client->setItem(2, array('itypes'=>array('1')));
   print_r($response);
 
   // unset item 
-  $response=$client->unsetItem(2, array('pio_itypes'=>array('1')));
+  $response=$client->unsetItem(2, array('itypes'=>array('1')));
   print_r($response);
 
   // delete item 
@@ -52,7 +52,7 @@ try {
   // create event
   $response=$client->createEvent(array(
                         'event' => 'my_event',
-                        'entityType' => 'pio_user',
+                        'entityType' => 'user',
                         'entityId' => '8',
                         'properties' => array('prop1'=>1, 'prop2'=>2),
                    ));

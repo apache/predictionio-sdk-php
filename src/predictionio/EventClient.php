@@ -58,7 +58,7 @@ class EventClient extends BaseClient {
 
     $json = json_encode([
         'event' => '$set',
-        'entityType' => 'pio_user',
+        'entityType' => 'user',
         'entityId' => $uid,
         'properties' => $properties,
         'eventTime' => $eventTime,
@@ -87,7 +87,7 @@ class EventClient extends BaseClient {
 
     $json = json_encode([
         'event' => '$unset',
-        'entityType' => 'pio_user',
+        'entityType' => 'user',
         'entityId' => $uid,
         'properties' => $properties,
         'eventTime' => $eventTime,
@@ -113,7 +113,7 @@ class EventClient extends BaseClient {
 
     $json = json_encode([
         'event' => '$delete',
-        'entityType' => 'pio_user',
+        'entityType' => 'user',
         'entityId' => $uid,
         'eventTime' => $eventTime,
     ]);
@@ -139,7 +139,7 @@ class EventClient extends BaseClient {
     if (empty($properties)) $properties = (object)$properties;
     $json = json_encode([
         'event' => '$set',
-        'entityType' => 'pio_item',
+        'entityType' => 'item',
         'entityId' => $iid,
         'properties' => $properties,
         'eventTime' => $eventTime,
@@ -167,7 +167,7 @@ class EventClient extends BaseClient {
         throw new PredictionIOAPIError('Specify at least one property'); 
     $json = json_encode([
         'event' => '$unset',
-        'entityType' => 'pio_item',
+        'entityType' => 'item',
         'entityId' => $iid,
         'properties' => $properties,
         'eventTime' => $eventTime,
@@ -193,7 +193,7 @@ class EventClient extends BaseClient {
 
     $json = json_encode([
         'event' => '$delete',
-        'entityType' => 'pio_item',
+        'entityType' => 'item',
         'entityId' => $iid,
         'eventTime' => $eventTime,
     ]);
@@ -223,9 +223,9 @@ class EventClient extends BaseClient {
     if (empty($properties)) $properties = (object)$properties;
     $json = json_encode([
         'event' => $event,
-        'entityType' => 'pio_user',
+        'entityType' => 'user',
         'entityId' => $uid,
-        'targetEntityType' => 'pio_item',
+        'targetEntityType' => 'item',
         'targetEntityId' => $iid,
         'properties' => $properties,
         'eventTime' => $eventTime,
