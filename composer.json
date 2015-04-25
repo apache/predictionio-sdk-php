@@ -25,7 +25,8 @@
         "guzzlehttp/guzzle": "~5.0"
     },
     "require-dev": {
-        "symfony/class-loader": "~2.3"
+        "symfony/class-loader": "~2.3",
+        "phpunit/phpunit": "4.6.*"
     },
     "autoload": {
         "psr-4": {
