@@ -52,7 +52,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, count($this->exporter->json));
         $json = $this->exporter->json[0];
-        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}"}$/';
+        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}"}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
@@ -71,7 +71,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, count($this->exporter->json));
         $json = $this->exporter->json[0];
-        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}"}$/';
+        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}"}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
@@ -90,7 +90,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, count($this->exporter->json));
         $json = $this->exporter->json[0];
-        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}"}$/';
+        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}"}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
@@ -113,7 +113,7 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, count($this->exporter->json));
         $json = $this->exporter->json[0];
-        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}","targetEntityType":"target-entity-type","targetEntityId":"target-entity-id","properties":{"property":true}}$/';
+        $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}","targetEntityType":"target-entity-type","targetEntityId":"target-entity-id","properties":{"property":true}}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 

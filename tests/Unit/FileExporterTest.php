@@ -26,9 +26,12 @@ class FileExporterTest extends \PHPUnit_Framework_TestCase {
 
         $exported = file_get_contents('temp.file');
 
+        $date = new \DateTime('2015-04-01');
+        $expectedDate = $date->format(\DateTime::ISO8601);
+
         $expected =<<<EOS
-{"event":"event-1","entityType":"entity-type-1","entityId":"entity-id-1","eventTime":"2015-04-01T00:00:00+0000"}
-{"event":"event-2","entityType":"entity-type-2","entityId":"entity-id-2","eventTime":"2015-04-01T00:00:00+0000","targetEntityType":"target-entity-type-2","targetEntityId":"target-entity-id-2","properties":{"property":"blue"}}
+{"event":"event-1","entityType":"entity-type-1","entityId":"entity-id-1","eventTime":"$expectedDate"}
+{"event":"event-2","entityType":"entity-type-2","entityId":"entity-id-2","eventTime":"$expectedDate","targetEntityType":"target-entity-type-2","targetEntityId":"target-entity-id-2","properties":{"property":"blue"}}
 
 EOS;
 
