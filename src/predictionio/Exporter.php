@@ -12,7 +12,8 @@ trait Exporter {
     }
 
     /**
-     * Create an event and write to the file.
+     * Create and export a json-encoded event.
+     *
      * @see \predictionio\EventClient::CreateEvent()
      *
      * @param $event
