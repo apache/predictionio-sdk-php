@@ -22,8 +22,8 @@ abstract class BaseClient {
     $this->baseUrl = $baseUrl;
     $this->client = new Client([
            'base_url' => $this->baseUrl,
-           'defaults' => ['timeout' => $timeout, 
-                          'connect_timeout' => $connectTimeout]
+           'timeout' => $timeout,
+           'connect_timeout' => $connectTimeout
     ]);
 
   }
@@ -50,11 +50,10 @@ abstract class BaseClient {
   protected function sendRequest($method, $url, $body) {
     $options = ['headers' => ['Content-Type' => 'application/json'],
                 'body' => $body]; 
-    $request = $this->client->createRequest($method, $url, $options);
 
     try {
-      $response = $this->client->send($request);
-      return $response->json();
+      $response = $this->client->request($method, $url, $options);
+      return json_decode($response->getBody(), true);
     } catch (ClientException $e) {
       throw new PredictionIOAPIError($e->getMessage()); 
     }
