@@ -21,7 +21,7 @@ abstract class BaseClient {
   public function __construct($baseUrl, $timeout, $connectTimeout) {
     $this->baseUrl = $baseUrl;
     $this->client = new Client([
-           'base_url' => $this->baseUrl,
+           'base_uri' => $this->baseUrl,
            'timeout' => $timeout,
            'connect_timeout' => $connectTimeout
     ]);
