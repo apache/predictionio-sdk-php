@@ -1,5 +1,5 @@
 {
-    "name": "predictionio/predictionio",
+    "name": "mpatnode-si/predictionio",
     "type": "library",
     "description": "PredictionIO API PHP Client",
     "keywords": [
