@@ -1,28 +1,37 @@
 <?php
 namespace predictionio\tests\Unit;
 
-use GuzzleHttp\Subscriber\History;
 use GuzzleHttp\Client;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use predictionio\EventClient;
 
 class EventClientTest extends \PHPUnit_Framework_TestCase {
+  /** @var  EventClient $eventClient */
   protected $eventClient;
-  protected $history;
+  protected $container = [];
 
   protected function setUp() {
+    $history=Middleware::History($this->container);
+    $mock=new MockHandler([new Response(200)]);
+    $handler=HandlerStack::create($mock);
+    $handler->push($history);
     $this->eventClient=new EventClient(
-      "j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O");
-    $this->history=new History();
-    $mock = new Mock([new Response(200)]);
-    $this->eventClient->client->getEmitter()->attach($this->history);
-    $this->eventClient->client->getEmitter()->attach($mock);
+        "j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O");
+    $existingOptions = $this->eventClient->client->getConfig();
+    $existingOptions['handler'] = $handler;
+    $mockClient=new Client($existingOptions);
+    $this->eventClient->client = $mockClient;
   }
 
   public function testSetUser() {
     $this->eventClient->setUser(1,array('age'=>20));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
@@ -31,14 +40,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(20,$body['properties']['age']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testSetUserWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->setUser(1,array('age'=>20), $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
@@ -47,7 +58,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
 
   public function testUnsetUser() {
     $this->eventClient->unsetUser(1,array('age'=>20));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
@@ -56,14 +69,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(20,$body['properties']['age']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testUnsetUserWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->unsetUser(1,array('age'=>20), $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
@@ -71,7 +86,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException predictionio\PredictionIOAPIError
+   * @expectedException \predictionio\PredictionIOAPIError
    */
   public function testUnsetUserWithoutProperties() {
     $this->eventClient->unsetUser(1, array());
@@ -79,7 +94,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
   
   public function testDeleteUser() {
     $this->eventClient->deleteUser(1);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
@@ -87,14 +104,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1,$body['entityId']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testDeleteUserWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->deleteUser(1, $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
@@ -103,7 +122,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
 
   public function testSetItem() {
     $this->eventClient->setItem(1,array('type'=>'book'));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
@@ -112,14 +133,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('book',$body['properties']['type']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testSetItemWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->setItem(1,array('type'=>'book'), $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$set',$body['event']);
@@ -128,7 +151,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
 
   public function testUnsetItem() {
     $this->eventClient->unsetItem(1,array('type'=>'book'));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
@@ -137,14 +162,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('book',$body['properties']['type']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testUnsetItemWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->unsetItem(1,array('type'=>'book'), $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$unset',$body['event']);
@@ -152,7 +179,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
   }
 
   /**
-   * @expectedException predictionio\PredictionIOAPIError
+   * @expectedException \predictionio\PredictionIOAPIError
    */
   public function testUnsetItemWithoutProperties() {
     $this->eventClient->unsetItem(1, array());
@@ -160,7 +187,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
 
   public function testDeleteItem() {
     $this->eventClient->deleteItem(1);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
@@ -168,14 +197,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(1,$body['entityId']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testDeleteItemWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->deleteItem(1, $eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('$delete',$body['event']);
@@ -184,7 +215,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
 
   public function testRecordAction() {
     $this->eventClient->recordUserActionOnItem('view',1,888, array('count'=>2));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('view',$body['event']);
@@ -195,14 +228,16 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(2,$body['properties']['count']);
     $this->assertNotNull($body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testRecordActionWithEventTime() {
     $eventTime='1982-09-25T01:23:45+0800';
 
     $this->eventClient->recordUserActionOnItem('view',1, 8, array(),$eventTime);
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('view',$body['event']);
@@ -223,7 +258,9 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
                                         ),
                         'eventTime' => '2004-12-13T21:39:45.618-07:00'
                        ));
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('my_event',$body['event']);
@@ -237,17 +274,19 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals(4.56,$body['properties']['prop6']);
     $this->assertEquals('2004-12-13T21:39:45.618-07:00',$body['eventTime']);
     $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUrl());
+    $this->assertEquals('http://localhost:7070/events.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',$request->getUri());
   }
 
   public function testGetEvent() {
     $this->eventClient->getEvent('event_id');
-    $request=$this->history->getLastRequest();
+    $result=array_shift($this->container);
+    /** @var Request $request */
+    $request=$result['request'];
     $body=json_decode($request->getBody(), true);
 
     $this->assertEquals('GET',$request->getMethod());
     $this->assertEquals('http://localhost:7070/events/event_id.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',
-                $request->getUrl());
+                $request->getUri());
   }
 
 

@@ -1,33 +1,42 @@
 <?php
 namespace predictionio\tests\Unit;
 
-use GuzzleHttp\Subscriber\History;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client;
-use GuzzleHttp\Subscriber\Mock;
-use GuzzleHttp\Message\Response;
 use predictionio\EngineClient;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+
 
 class EngineClientTest extends \PHPUnit_Framework_TestCase {
+  /** @var EngineClient $engineClient */
   protected $engineClient;
-  protected $history;
+  protected $container = [];
 
   protected function setUp() {
+    $history=Middleware::History($this->container);
+    $mock=new MockHandler([new Response(200)]);
+    $handler=HandlerStack::create($mock);
+    $handler->push($history);
     $this->engineClient=new EngineClient();
-    $this->history=new History();
-    $mock = new Mock([new Response(200)]);
-    $this->engineClient->client->getEmitter()->attach($this->history);
-    $this->engineClient->client->getEmitter()->attach($mock);
+    $existingOptions = $this->engineClient->client->getConfig();
+    $existingOptions['handler'] = $handler;
+    $mockClient=new Client($existingOptions);
+    $this->engineClient->client = $mockClient;
   }
 
   public function testSendQuery() {
     $this->engineClient->sendQuery(array('uid'=>5, 'iids'=>array(1,2,3)));
-    $request=$this->history->getLastRequest();
-    $body=json_decode($request->getBody(), true);
+    $result=array_shift($this->container);
+    /** @var Request[] $result['request'] */
+    $body=json_decode($result['request']->getBody(), true);
 
     $this->assertEquals(5,$body['uid']);
     $this->assertEquals(array(1,2,3),$body['iids']);
-    $this->assertEquals('POST',$request->getMethod());
-    $this->assertEquals('http://localhost:8000/queries.json',$request->getUrl());
+    $this->assertEquals('POST',$result['request']->getMethod());
+    $this->assertEquals('http://localhost:8000/queries.json',$result['request']->getUri());
   }
 
 }
