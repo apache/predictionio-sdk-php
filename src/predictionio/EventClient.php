@@ -3,7 +3,8 @@
 namespace predictionio;
 use GuzzleHttp\Client;
 use \DateTime;
- 
+use GuzzleHttp\Promise\PromiseInterface;
+
 /**
  * Client for connecting to an Event Server
  *
@@ -211,14 +212,14 @@ class EventClient extends BaseClient {
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
-   *
-   * @return string JSON response
+   * @param bool Send request asynchronously
+   * @return array|PromiseInterface JSON response or PromiseInterface object if async
    * 
    * @throws PredictionIOAPIError Request error
    */
    public function recordUserActionOnItem($event, $uid, $iid, 
                                          array $properties=array(),
-                                         $eventTime=null) {
+                                         $eventTime=null, $async = false) {
     $eventTime = $this->getEventTime($eventTime);
     if (empty($properties)) $properties = (object)$properties;
     $json = json_encode([
@@ -231,7 +232,7 @@ class EventClient extends BaseClient {
         'eventTime' => $eventTime,
     ]);
 
-    return $this->sendRequest('POST', $this->eventUrl, $json);
+    return $this->sendRequest('POST', $this->eventUrl, $json, $async);
   }
 
   /**
