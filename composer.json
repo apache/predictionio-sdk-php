@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
         "symfony/class-loader": "~2.3",
