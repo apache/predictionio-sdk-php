@@ -4,7 +4,6 @@ namespace predictionio;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Base client for Event and Engine client
@@ -44,21 +43,17 @@ abstract class BaseClient {
    * @param string $method HTTP request method
    * @param string $url Relative or absolute url
    * @param string $body HTTP request body
-   * @param boolean $async Send request asynchronously and return a promise
-   * @return array|PromiseInterface JSON response
-   * @throws PredictionIOAPIError
+   *
+   * @return array JSON response
+   * @throws PredictionIOAPIError Request error
    */
-  protected function sendRequest($method, $url, $body, $async = false) {
+  protected function sendRequest($method, $url, $body) {
     $options = ['headers' => ['Content-Type' => 'application/json'],
                 'body' => $body]; 
 
     try {
-      if ($async) {
-        return $this->client->requestAsync($method, $url, $options);
-      } else {
-        $response = $this->client->request($method, $url, $options);
-        return json_decode($response->getBody(), true);
-      }
+      $response = $this->client->request($method, $url, $options);
+      return json_decode($response->getBody(), true);
     } catch (ClientException $e) {
       throw new PredictionIOAPIError($e->getMessage()); 
     }
