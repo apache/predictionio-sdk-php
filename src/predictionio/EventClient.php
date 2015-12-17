@@ -259,8 +259,7 @@ class EventClient extends BaseClient {
    * @throws PredictionIOAPIError Request error
    */
   public function createEvents(array $data) {
-    $json = json_encode($data);
-    return $this->sendRequest('POST', '/batch' . $this->eventUrl, $json);
+    return $this->sendRequest('POST', '/batch' . $this->eventUrl, json_encode($data));
   }
   
   /**
