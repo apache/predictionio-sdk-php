@@ -7,21 +7,40 @@ namespace predictionio;
  *
  * @package predictionio
  */
-class FileExporter {
-
+class FileExporter
+{
     use Exporter;
 
+    /**
+     * @var resource
+     */
     private $file;
 
-    public function __construct($fileName) {
+    /**
+     * Constructor.
+     *
+     * @param string $fileName
+     */
+    public function __construct($fileName)
+    {
         $this->file = fopen($fileName, 'w');
     }
 
-    public function export($json) {
+    /**
+     * Export
+     *
+     * @param string $json
+     */
+    public function export($json)
+    {
         fwrite($this->file, "$json\n");
     }
 
-    public function close() {
+    /**
+     * Close
+     */
+    public function close()
+    {
         fclose($this->file);
     }
 }
