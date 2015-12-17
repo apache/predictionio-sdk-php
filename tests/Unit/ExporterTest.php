@@ -2,42 +2,86 @@
 
 namespace predictionio\tests\Unit;
 
-
 use predictionio\Exporter;
 
-class TestExporter {
+/**
+ * Class TestExporter
+ *
+ * @package predictionio\tests\Unit
+ */
+class TestExporter
+{
     use Exporter {
         jsonEncode as traitJsonEncode;
     }
 
+    /**
+     * @var array
+     */
     public $json;
+
+    /**
+     * @var array
+     */
     public $data;
 
-    public function __construct() {
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
         $this->json = [];
         $this->data = [];
     }
 
-    public function jsonEncode($data) {
+    /**
+     * Json Encode
+     *
+     * @param $data
+     * @return string
+     */
+    public function jsonEncode($data)
+    {
         $this->data[] = $data;
+
         return $this->traitJsonEncode($data);
     }
 
-    public function export($json) {
+    /**
+     * Export
+     *
+     * @param $json
+     */
+    public function export($json)
+    {
         $this->json[] = $json;
     }
 }
 
-class ExporterTest extends \PHPUnit_Framework_TestCase {
+/**
+ * Class ExporterTest
+ *
+ * @package predictionio\tests\Unit
+ */
+class ExporterTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @var TestExporter $exporter */
     private $exporter;
 
-    protected function setUp() {
+    /**
+     * SetUp
+     */
+    protected function setUp()
+    {
         $this->exporter = new TestExporter();
     }
 
-    public function testTimeIsNow() {
+    /**
+     * Test Time Is Now
+     */
+    public function testTimeIsNow()
+    {
         $time = new \DateTime();
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id');
@@ -56,7 +100,11 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testTimeIsString() {
+    /**
+     * Test Time Is String
+     */
+    public function testTimeIsString()
+    {
         $time = new \DateTime('2015-04-01');
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id', null, null, null, '2015-04-01');
@@ -75,7 +123,11 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testTimeIsDateTime() {
+    /**
+     * Test Time Is DateTime
+     */
+    public function testTimeIsDateTime()
+    {
         $time = new \DateTime('2015-04-01');
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id', null, null, null, $time);
@@ -94,7 +146,11 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testOptionalFields() {
+    /**
+     * Test Optional Fields
+     */
+    public function testOptionalFields()
+    {
         $time = new \DateTime('2015-04-01');
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id',
@@ -116,5 +172,4 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}","targetEntityType":"target-entity-type","targetEntityId":"target-entity-id","properties":{"property":true}}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
-
 }
