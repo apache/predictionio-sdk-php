@@ -21,11 +21,12 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "guzzlehttp/guzzle": "~5.0"
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
-        "symfony/class-loader": "~2.3"
+        "symfony/class-loader": "~2.3",
+        "phpunit/phpunit": "^4.7"
     },
     "autoload": {
         "psr-4": {

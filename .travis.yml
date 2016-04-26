@@ -1,7 +1,8 @@
 language: php
 php:
+  - 7.0
+  - 5.6
   - 5.5
-  - 5.4
 before_script:
   - pear channel-discover pear.phing.info
   - pear install phing/phing
