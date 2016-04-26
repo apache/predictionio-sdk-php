@@ -14,16 +14,16 @@ abstract class BaseClient {
   public $client;
 
   /**
-   * @param string Base URL to the server
-   * @param float Timeout of the request in seconds. Use 0 to wait indefinitely
-   * @param float Number of seconds to wait while trying to connect to a server
+   * @param string $baseUrl Base URL to the server
+   * @param float $timeout Timeout of the request in seconds. Use 0 to wait indefinitely
+   * @param float $connectTimeout Number of seconds to wait while trying to connect to a server
    */  
   public function __construct($baseUrl, $timeout, $connectTimeout) {
     $this->baseUrl = $baseUrl;
     $this->client = new Client([
-           'base_url' => $this->baseUrl,
-           'defaults' => ['timeout' => $timeout, 
-                          'connect_timeout' => $connectTimeout]
+           'base_uri' => $this->baseUrl,
+           'timeout' => $timeout,
+           'connect_timeout' => $connectTimeout
     ]);
 
   }
@@ -40,9 +40,9 @@ abstract class BaseClient {
   /**
    * Send a HTTP request to the server
    *
-   * @param string HTTP request method
-   * @param string Relative or absolute url
-   * @param string HTTP request body
+   * @param string $method HTTP request method
+   * @param string $url Relative or absolute url
+   * @param string $body HTTP request body
    *
    * @return array JSON response
    * @throws PredictionIOAPIError Request error
@@ -50,11 +50,10 @@ abstract class BaseClient {
   protected function sendRequest($method, $url, $body) {
     $options = ['headers' => ['Content-Type' => 'application/json'],
                 'body' => $body]; 
-    $request = $this->client->createRequest($method, $url, $options);
 
     try {
-      $response = $this->client->send($request);
-      return $response->json();
+      $response = $this->client->request($method, $url, $options);
+      return json_decode($response->getBody(), true);
     } catch (ClientException $e) {
       throw new PredictionIOAPIError($e->getMessage()); 
     }
