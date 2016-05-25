@@ -122,5 +122,5 @@ Retrieving Prediction Result
 $engineClient = new EngineClient('http://localhost:8000');
 $response = $engineClient->sendQuery(array('uid'=>7, 'iids'=>array(1,2,3,4,5)));
 
-print_r($rec);
+print_r($response);
 ```
