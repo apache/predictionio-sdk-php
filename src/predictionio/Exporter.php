@@ -1,13 +1,12 @@
-<?php
-
-namespace predictionio;
+<?php namespace predictionio;
 
 
-trait Exporter {
-
+trait Exporter
+{
     abstract public function export($json);
 
-    public function jsonEncode($data) {
+    public function jsonEncode($data)
+    {
         return json_encode($data);
     }
 
@@ -25,8 +24,9 @@ trait Exporter {
      * @param $eventTime
      */
     public function createEvent($event, $entityType, $entityId,
-                                $targetEntityType=null, $targetEntityId=null, array $properties=null,
-                                $eventTime=null) {
+                                $targetEntityType = null, $targetEntityId = null, array $properties = null,
+                                $eventTime = null)
+    {
 
         if (!isset($eventTime)) {
             $eventTime = new \DateTime();
