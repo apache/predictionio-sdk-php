@@ -8,8 +8,9 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use predictionio\EventClient;
+use PHPUnit\Framework\TestCase;
 
-class EventClientTest extends \PHPUnit_Framework_TestCase {
+class EventClientTest extends TestCase {
   /** @var  EventClient $eventClient */
   protected $eventClient;
   protected $container = [];
@@ -91,7 +92,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
   public function testUnsetUserWithoutProperties() {
     $this->eventClient->unsetUser(1, array());
   }
-  
+
   public function testDeleteUser() {
     $this->eventClient->deleteUser(1);
     $result=array_shift($this->container);
@@ -288,10 +289,4 @@ class EventClientTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals('http://localhost:7070/events/event_id.json?accessKey=j4jIdbq59JsF2f4CXwwkIiVHNFnyNvWXqMqXxcIbQDqFRz5K0fe9e3QfqjKwvW3O',
                 $request->getUri());
   }
-
-
-
-
 }
-?>
-

@@ -2,10 +2,10 @@
 
 namespace predictionio\tests\Unit;
 
-
 use predictionio\FileExporter;
+use PHPUnit\Framework\TestCase;
 
-class FileExporterTest extends \PHPUnit_Framework_TestCase {
+class FileExporterTest extends TestCase {
 
     public function setUp()
     {
