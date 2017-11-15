@@ -2,8 +2,8 @@
 
 namespace predictionio\tests\Unit;
 
-
 use predictionio\Exporter;
+use PHPUnit\Framework\TestCase;
 
 class TestExporter {
     use Exporter {
@@ -28,7 +28,7 @@ class TestExporter {
     }
 }
 
-class ExporterTest extends \PHPUnit_Framework_TestCase {
+class ExporterTest extends TestCase {
 
     /** @var TestExporter $exporter */
     private $exporter;
