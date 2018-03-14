@@ -48,8 +48,13 @@ abstract class BaseClient {
    * @throws PredictionIOAPIError Request error
    */
   protected function sendRequest($method, $url, $body) {
-    $options = ['headers' => ['Content-Type' => 'application/json'],
-                'body' => $body]; 
+    $options = [
+      'headers' => [
+        'Accept-Encoding' => 'gzip',
+        'Content-Type' => 'application/json',
+      ],
+      'body' => $body,
+    ];
 
     try {
       $response = $this->client->request($method, $url, $options);
