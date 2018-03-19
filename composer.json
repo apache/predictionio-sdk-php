@@ -1,23 +1,22 @@
 {
     "name": "predictionio/predictionio",
     "type": "library",
-    "description": "PredictionIO API PHP Client",
+    "description": "Apache PredictionIO API PHP Client",
     "keywords": [
         "predictionio",
-        "tappingstone",
         "rest",
         "restful",
         "web service",
         "prediction",
         "recommendation"
     ],
-    "homepage": "http://prediction.io",
+    "homepage": "http://predictionio.apache.org",
     "license": "Apache-2.0",
     "authors": [
         {
-            "name": "The PredictionIO Team",
-            "email": "help@prediction.io",
-            "homepage": "http://prediction.io"
+            "name": "Apache PredictionIO",
+            "email": "user@predictionio.apache.org",
+            "homepage": "http://predictionio.apache.org"
         }
     ],
     "require": {
