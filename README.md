@@ -16,23 +16,11 @@ Note: This SDK only supports Apache PredictionIO version 0.8.2 or higher.
 
 The easiest way to install PredictionIO PHP client is to use [Composer](http://getcomposer.org/).
 
-1. Add `predictionio/predictionio` as a dependency in your project's ``composer.json`` file:
+1. `predictionio` is available on [Packagist](https://packagist.org) and can be installed using [Composer](https://getcomposer.org/):
 
-        {
-            "require": {
-                "predictionio/predictionio": "~0.9.0"
-            }
-        }
+        composer require predictionio/predictionio
 
-2. Install Composer:
-
-        curl -sS https://getcomposer.org/installer | php -d detect_unicode=Off
-
-3. Use Composer to install your dependencies:
-
-        php composer.phar install
-
-4. Include Composer's autoloader in your PHP code
+2. Include Composer's autoloader in your PHP code
 
         require_once("vendor/autoload.php");
 
