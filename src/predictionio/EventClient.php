@@ -250,6 +250,19 @@ class EventClient extends BaseClient {
   }
 
   /**
+   * Create batch events
+   *
+   * @param array An array describing the events
+   *
+   * @return string JSON response
+   * 
+   * @throws PredictionIOAPIError Request error
+   */
+  public function createEvents(array $data) {
+    return $this->sendRequest('POST', '/batch' . $this->eventUrl, json_encode($data));
+  }
+  
+  /**
    * Retrieve an event
    *
    * @param string Event ID
