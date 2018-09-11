@@ -15,17 +15,18 @@
     "authors": [
         {
             "name": "Apache PredictionIO",
-            "email": "user@predictionio.apache.org",
+            "email": "dev@predictionio.apache.org",
             "homepage": "http://predictionio.apache.org"
         }
     ],
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.6.0",
         "guzzlehttp/guzzle": "^6.1"
     },
     "require-dev": {
-        "symfony/class-loader": "~2.3",
-        "phpunit/phpunit": "^4.7"
+        "symfony/class-loader": "^2.3",
+        "phpunit/phpunit": "^4.7",
+        "apigen/apigen": "^4.1.2"
     },
     "autoload": {
         "psr-4": {

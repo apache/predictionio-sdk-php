@@ -1,11 +1,11 @@
 # Apache PredictionIO PHP SDK
 
-
-[![Build Status](https://travis-ci.org/apache/incubator-predictionio-sdk-php.svg?branch=develop)](https://travis-ci.org/apache/incubator-predictionio-sdk-php)
+[![Build
+Status](https://travis-ci.org/apache/predictionio-sdk-php.svg?branch=develop)](https://travis-ci.org/apache/predictionio-sdk-php)
 
 ## Prerequisites
 
-* PHP 5.4+ (http://php.net/)
+* PHP 5.6+ (http://php.net/)
 * PHP: cURL (http://php.net/manual/en/book.curl.php)
 * Phing (http://www.phing.info/)
 * ApiGen (http://apigen.org/)
@@ -14,9 +14,11 @@ Note: This SDK only supports Apache PredictionIO version 0.8.2 or higher.
 
 ## Getting Started
 
-The easiest way to install PredictionIO PHP client is to use [Composer](http://getcomposer.org/).
+The easiest way to install PredictionIO PHP client is to use
+[Composer](http://getcomposer.org/).
 
-1. `predictionio` is available on [Packagist](https://packagist.org) and can be installed using [Composer](https://getcomposer.org/):
+1. `predictionio` is available on [Packagist](https://packagist.org) and can be
+installed using [Composer](https://getcomposer.org/):
 
         composer require predictionio/predictionio
 
@@ -75,19 +77,22 @@ print_r($response);
 
 ## Bugs and Feature Requests
 
-Use [Apache JIRA](https://issues.apache.org/jira/browse/PIO) to report bugs or request new features.
+Use [Apache JIRA](https://issues.apache.org/jira/browse/PIO) to report bugs or
+request new features.
 
 ## Community
 
 Keep track of development and community news.
 
-*   Subscribe to the user mailing list <mailto:user-subscribe@predictionio.apache.org>
-    and the dev mailing list <mailto:dev-subscribe@predictionio.apache.org>
+*   Subscribe to the [user mailing
+    list](mailto:user-subscribe@predictionio.apache.org) and the [dev mailing
+    list](mailto:dev-subscribe@predictionio.apache.org).
 *   Follow [@PredictionIO](https://twitter.com/PredictionIO) on Twitter.
 
 ## Contributing
 
-Read the [Contribute Code](http://predictionio.apache.org/community/contribute-code/) page.
+Read the [Contribute
+Code](http://predictionio.apache.org/community/contribute-code/) page.
 
 ## License
 
