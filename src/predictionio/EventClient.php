@@ -1,9 +1,24 @@
 <?php
 
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 namespace predictionio;
 use GuzzleHttp\Client;
 use \DateTime;
- 
+
 /**
  * Client for connecting to an Event Server
  *
@@ -19,7 +34,7 @@ class EventClient extends BaseClient {
    * @param float Timeout of the request in seconds. Use 0 to wait indefinitely
    *              Default is 0.
    * @param float Number of seconds to wait while trying to connect to a server.
-   *              Default is 5.                
+   *              Default is 5.
    */
   public function __construct($accessKey, $baseUrl='http://localhost:7070',
                               $timeout=0, $connectTimeout=5 ) {
@@ -32,7 +47,7 @@ class EventClient extends BaseClient {
     $result = $eventTime;
     if (!isset($eventTime)) {
       $result = (new DateTime('NOW'))->format(self::DATE_TIME_FORMAT);
-    } 
+    }
 
     return $result;
   }
@@ -40,14 +55,14 @@ class EventClient extends BaseClient {
   /**
    * Set a user entity
    *
-   * @param int|string User Id 
+   * @param int|string User Id
    * @param array Properties of the user entity to set
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function setUser($uid, array $properties=array(), $eventTime=null) {
@@ -70,20 +85,20 @@ class EventClient extends BaseClient {
   /**
    * Unset a user entity
    *
-   * @param int|string User Id 
+   * @param int|string User Id
    * @param array Properties of the user entity to unset
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function unsetUser($uid, array $properties, $eventTime=null) {
     $eventTime = $this->getEventTime($eventTime);
-    if (empty($properties)) 
-      throw new PredictionIOAPIError('Specify at least one property'); 
+    if (empty($properties))
+      throw new PredictionIOAPIError('Specify at least one property');
 
     $json = json_encode([
         'event' => '$unset',
@@ -99,13 +114,13 @@ class EventClient extends BaseClient {
   /**
    * Delete a user entity
    *
-   * @param int|string User Id 
+   * @param int|string User Id
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function deleteUser($uid, $eventTime=null) {
@@ -120,18 +135,18 @@ class EventClient extends BaseClient {
 
     return $this->sendRequest('POST', $this->eventUrl, $json);
   }
- 
+
   /**
    * Set an item entity
    *
-   * @param int|string Item Id 
+   * @param int|string Item Id
    * @param array Properties of the item entity to set
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
    public function setItem($iid, array $properties=array(), $eventTime=null) {
@@ -151,20 +166,20 @@ class EventClient extends BaseClient {
   /**
    * Unset an item entity
    *
-   * @param int|string Item Id 
+   * @param int|string Item Id
    * @param array Properties of the item entity to unset
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function unsetItem($iid, array $properties, $eventTime=null) {
     $eventTime = $this->getEventTime($eventTime);
     if (empty($properties))
-        throw new PredictionIOAPIError('Specify at least one property'); 
+        throw new PredictionIOAPIError('Specify at least one property');
     $json = json_encode([
         'event' => '$unset',
         'entityType' => 'item',
@@ -179,13 +194,13 @@ class EventClient extends BaseClient {
   /**
    * Delete an item entity
    *
-   * @param int|string Item Id 
+   * @param int|string Item Id
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function deleteItem($iid, $eventTime=null) {
@@ -205,18 +220,18 @@ class EventClient extends BaseClient {
    * Record a user action on an item
    *
    * @param string Event name
-   * @param int|string User Id 
-   * @param int|string Item Id 
+   * @param int|string User Id
+   * @param int|string Item Id
    * @param array Properties of the event
    * @param string Time of the event in ISO 8601 format
    *               (e.g. 2014-09-09T16:17:42.937-08:00).
    *               Default is the current time.
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
-   public function recordUserActionOnItem($event, $uid, $iid, 
+   public function recordUserActionOnItem($event, $uid, $iid,
                                          array $properties=array(),
                                          $eventTime=null) {
     $eventTime = $this->getEventTime($eventTime);
@@ -240,7 +255,7 @@ class EventClient extends BaseClient {
    * @param array An array describing the event
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function createEvent(array $data) {
@@ -255,11 +270,11 @@ class EventClient extends BaseClient {
    * @param string Event ID
    *
    * @return string JSON response
-   * 
+   *
    * @throws PredictionIOAPIError Request error
    */
   public function getEvent($eventId) {
-    return $this->sendRequest('GET', 
+    return $this->sendRequest('GET',
       "/events/$eventId.json?accessKey=$this->accessKey", '');
   }
 }
