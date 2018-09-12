@@ -24,3 +24,4 @@ before_script:
   - phpenv rehash
   - phing
   - composer install --no-dev
+  - phpunit --version
