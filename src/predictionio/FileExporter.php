@@ -22,21 +22,24 @@ namespace predictionio;
  *
  * @package predictionio
  */
-class FileExporter {
-
+class FileExporter
+{
     use Exporter;
 
     private $file;
 
-    public function __construct($fileName) {
+    public function __construct($fileName)
+    {
         $this->file = fopen($fileName, 'w');
     }
 
-    public function export($json) {
+    public function export($json)
+    {
         fwrite($this->file, "$json\n");
     }
 
-    public function close() {
+    public function close()
+    {
         fclose($this->file);
     }
 }

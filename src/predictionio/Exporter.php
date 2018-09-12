@@ -17,12 +17,12 @@
 
 namespace predictionio;
 
-
-trait Exporter {
-
+trait Exporter
+{
     abstract public function export($json);
 
-    public function jsonEncode($data) {
+    public function jsonEncode($data)
+    {
         return json_encode($data);
     }
 
@@ -39,10 +39,15 @@ trait Exporter {
      * @param array $properties
      * @param $eventTime
      */
-    public function createEvent($event, $entityType, $entityId,
-                                $targetEntityType=null, $targetEntityId=null, array $properties=null,
-                                $eventTime=null) {
-
+    public function createEvent(
+        $event,
+        $entityType,
+        $entityId,
+        $targetEntityType=null,
+        $targetEntityId=null,
+        array $properties=null,
+        $eventTime=null
+    ) {
         if (!isset($eventTime)) {
             $eventTime = new \DateTime();
         } elseif (!($eventTime instanceof \DateTime)) {
@@ -73,5 +78,4 @@ trait Exporter {
 
         $this->export($json);
     }
-
 }
