@@ -1,11 +1,26 @@
 <?php
 
-namespace predictionio\tests\Unit;
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+namespace predictionio\tests\Unit;
 
 use predictionio\Exporter;
 
-class TestExporter {
+class TestExporter
+{
     use Exporter {
         jsonEncode as traitJsonEncode;
     }
@@ -13,31 +28,37 @@ class TestExporter {
     public $json;
     public $data;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->json = [];
         $this->data = [];
     }
 
-    public function jsonEncode($data) {
+    public function jsonEncode($data)
+    {
         $this->data[] = $data;
         return $this->traitJsonEncode($data);
     }
 
-    public function export($json) {
+    public function export($json)
+    {
         $this->json[] = $json;
     }
 }
 
-class ExporterTest extends \PHPUnit_Framework_TestCase {
+class ExporterTest extends \PHPUnit_Framework_TestCase
+{
 
     /** @var TestExporter $exporter */
     private $exporter;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->exporter = new TestExporter();
     }
 
-    public function testTimeIsNow() {
+    public function testTimeIsNow()
+    {
         $time = new \DateTime();
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id');
@@ -56,7 +77,8 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testTimeIsString() {
+    public function testTimeIsString()
+    {
         $time = new \DateTime('2015-04-01');
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id', null, null, null, '2015-04-01');
@@ -75,7 +97,8 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testTimeIsDateTime() {
+    public function testTimeIsDateTime()
+    {
         $time = new \DateTime('2015-04-01');
 
         $this->exporter->createEvent('event', 'entity-type', 'entity-id', null, null, null, $time);
@@ -94,11 +117,19 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
 
-    public function testOptionalFields() {
+    public function testOptionalFields()
+    {
         $time = new \DateTime('2015-04-01');
 
-        $this->exporter->createEvent('event', 'entity-type', 'entity-id',
-            'target-entity-type', 'target-entity-id', ['property' => true], $time);
+        $this->exporter->createEvent(
+            'event',
+            'entity-type',
+            'entity-id',
+            'target-entity-type',
+            'target-entity-id',
+            ['property' => true],
+            $time
+        );
 
         $this->assertEquals(1, count($this->exporter->data));
         $data = $this->exporter->data[0];
@@ -116,5 +147,4 @@ class ExporterTest extends \PHPUnit_Framework_TestCase {
         $pattern = '/^{"event":"event","entityType":"entity-type","entityId":"entity-id","eventTime":"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{4}","targetEntityType":"target-entity-type","targetEntityId":"target-entity-id","properties":{"property":true}}$/';
         $this->assertTrue(preg_match($pattern, $json) === 1, 'json');
     }
-
 }
