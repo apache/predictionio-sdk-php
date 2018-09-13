@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+   http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
 <project name="predictionio" default="install-dependencies">
 
   <target name="install-dependencies">
@@ -10,8 +25,10 @@
       </then>
       <else>
         <echo message="Installing composer" />
-        <exec command="curl -s http://getcomposer.org/installer | php" passthru="true" />
-        <exec command="php composer.phar install --dev" passthru="true" />
+        <exec command="php -r &quot;copy('https://getcomposer.org/installer', 'composer-setup.php');&quot;" passthru="true" />
+        <exec command="php -r &quot;if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;&quot;" passthru="true" />
+        <exec command="php composer-setup.php" passthru="true" />
+        <exec command="php -r &quot;unlink('composer-setup.php');&quot;" passthru="true" />
       </else>
     </if>
   </target>
@@ -26,7 +43,11 @@
   </target>
 
   <target name="apigen">
-    <exec command="apigen -s src -d docs --title 'PredictionIO API PHP Client'" passthru="true" />
+    <exec command="vendor/apigen/apigen/bin/apigen generate -s src -d docs --title 'PredictionIO API PHP Client'" passthru="true" />
+  </target>
+
+  <target name="test">
+    <exec command="vendor/phpunit/phpunit/phpunit" passthru="true" />
   </target>
 
 </project>
