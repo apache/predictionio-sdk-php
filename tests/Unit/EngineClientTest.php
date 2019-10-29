@@ -24,8 +24,9 @@ use predictionio\EngineClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
-class EngineClientTest extends \PHPUnit_Framework_TestCase
+class EngineClientTest extends TestCase
 {
     /** @var EngineClient $engineClient */
     protected $engineClient;
