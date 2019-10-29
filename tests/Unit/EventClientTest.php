@@ -24,8 +24,9 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use predictionio\EventClient;
+use PHPUnit\Framework\TestCase;
 
-class EventClientTest extends \PHPUnit_Framework_TestCase
+class EventClientTest extends TestCase
 {
     /** @var  EventClient $eventClient */
     protected $eventClient;
@@ -319,7 +320,7 @@ class EventClientTest extends \PHPUnit_Framework_TestCase
         $result=array_shift($this->container);
         /** @var Request $request */
         $request=$result['request'];
-        $body=json_decode($request->getBody(), true);
+        json_decode($request->getBody(), true);
 
         $this->assertEquals('GET', $request->getMethod());
         $this->assertEquals(

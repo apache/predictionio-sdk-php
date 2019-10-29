@@ -18,10 +18,11 @@
 namespace predictionio\tests\Unit;
 
 use predictionio\FileExporter;
+use PHPUnit\Framework\TestCase;
 
-class FileExporterTest extends \PHPUnit_Framework_TestCase
+class FileExporterTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         register_shutdown_function(function () {
             if (file_exists('temp.file')) {
